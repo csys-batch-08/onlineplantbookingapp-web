@@ -1,0 +1,55 @@
+@charset "ISO-8859-1";
+*{
+  padding: 0;
+  margin: 0;
+  font-family: sans-serif;
+}
+
+.card{
+  padding: 60px 40px 50px 40px;
+  background:#82ac85;
+  border-radius: 5px;
+  top: 20%;
+}
+.container{
+  top:20%;
+  left:50%;
+  position:absolute;
+  transform:translate(-50%,-50%);
+}
+.registration-form{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+
+}
+.registration-form h1 {
+  font-size: 200%;
+  text-align:left;
+  text-transform: uppercase;
+  margin: 40px;
+
+}
+.registration-form p {
+  font-size: 20px;
+  margin: 15px 0;
+
+}
+.registration-form input {
+  font-size: 16px;
+  padding: 15px 10px;
+  width: 100%;
+  border-radius: 20px;
+ 
+}
+.registration-form button {
+  font-size: 18px;
+  font-weight: bold;
+  margin: 20px 0;
+  padding: 10px 15px;
+  width:50%;
+  border: 0;
+  border-radius: none;
+  background-color:#e2cfc9;
+}
