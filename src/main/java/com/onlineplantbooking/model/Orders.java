@@ -3,6 +3,11 @@ package com.onlineplantbooking.model;
 import java.util.Date;
 
 public class Orders {
+	public Orders() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
 	private int orderid;
 	private Product product;
 	private User user;

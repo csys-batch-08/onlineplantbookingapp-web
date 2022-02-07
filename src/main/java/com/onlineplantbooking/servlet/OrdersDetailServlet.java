@@ -1,7 +1,6 @@
 package com.onlineplantbooking.servlet;
 
 import java.io.IOException;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -22,50 +21,44 @@ import com.onlineplantbooking.model.User;
 
 public class OrdersDetailServlet extends HttpServlet {
 
+	private static final long serialVersionUID = 1L;
+
 	protected void service(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-	
+
 		HttpSession session = request.getSession();
 		User rs = (User) session.getAttribute("currentUser");
+
+		Product product = (Product) session.getAttribute("currentPlant1");
+		int quantity = Integer.parseInt(request.getParameter("quantity"));
+		int plantPrice = Integer.parseInt(request.getParameter("total"));
+		session.setAttribute("total", plantPrice);
+		String address = request.getParameter("addresss");
+
+		Orders order = new Orders(product, rs, quantity, plantPrice, address);
+
+		UserDaoImpl userDao = new UserDaoImpl();
+		OrdersDaoImpl orderDao = new OrdersDaoImpl();
 	
+
+		try {
+			User user1 = orderDao.insertOrder(order);
+			int userId = user1.getUserId();
+			List<User> userList = userDao.myProfile(userId);
+			if (user1 != null) {
+				HttpSession session1 = request.getSession();
+
+				session1.setAttribute("UpdateList", userList);
+				response.sendRedirect("ShowOrderServlet");
+
+			} else  
+				response.sendRedirect("orderDetails.jsp");
 			
-			Product product = (Product) session.getAttribute("currentPlant");
-			System.out.println(product);
-			int quantity = Integer.parseInt(request.getParameter("quantity"));
-			System.out.println(quantity);
-			int plantPrice = Integer.parseInt(request.getParameter("total"));
-			System.out.println(plantPrice);
-			session.setAttribute("total", plantPrice);
-			String address = request.getParameter("addresss");
-			System.out.println(address);
-
-			Orders order = new Orders(product, rs, quantity, plantPrice, address);
-
-			UserDaoImpl userDao=new UserDaoImpl();
-			OrdersDaoImpl orderDao = new OrdersDaoImpl();
-			int i=0;
+		} catch (SQLException e) {
 			
-			try {
-				User user1 = orderDao.insertOrder(order);
-				int userId=user1.getUserId();
-				List<User> userList=userDao.myProfile(userId);
-				if (user1!=null) {
-					HttpSession  session1=request.getSession();
-
-					session1.setAttribute("UpdateList", userList);
-					response.sendRedirect("ShowOrder.jsp");
-					
-				} else {
-					response.sendRedirect("orderDetails.jsp");	
-				}
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			
-
-
+			e.printStackTrace();
 		}
 
 	}
 
+}

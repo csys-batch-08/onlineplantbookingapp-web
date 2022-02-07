@@ -1,6 +1,5 @@
 package com.onlineplantbooking.daoImpl;
 
-import java.beans.Statement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -9,25 +8,32 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.onlineplantbooking.model.Cart;
-import com.onlineplantbooking.model.Orders;
 import com.onlineplantbooking.model.Product;
 import com.onlineplantbooking.util.ConnectionUtil;
 
 public class CartDaoImpl {
-    
-	//insert cart
+	
+	static final String PLANTID = "PLANT_ID";
+	static final String PLANTNAME ="PLANT_NAME";
+	static final String PLANTDESCRIPTION = "PLANT_DESCRIPTION";
+	static final String PLANTPRICE = "PLANT_PRICE";
+	static final String CATEGORYNAME = "CATEGORY_NAME";
+	static final String PICTURE = "PICTURE";
+	static final String PLANTSTATUS = "PLANT_STATUS";
+	static final String USERID = "USER_ID";
+	static final String CARTID= "CART_ID";
+	
 	public void insertCart(Cart cart) {
     	String insertQuery="insert into cart(user_id,plant_id)values(?,?)";
-    	ConnectionUtil con=new ConnectionUtil();
-        Connection c1=con.getDbConnection();
-        PreparedStatement p1;
+    	Connection connection=ConnectionUtil.getDbConnection();
+        PreparedStatement preparedStatement=null;
        
         try {
-			p1=c1.prepareStatement(insertQuery);
-			p1.setInt(1,cart.getUserId());
-			p1.setInt(2, cart.getPlantId());
-			p1.executeUpdate();
-			p1.executeUpdate("commit");
+			preparedStatement=connection.prepareStatement(insertQuery);
+			preparedStatement.setInt(1,cart.getUserId());
+			preparedStatement.setInt(2, cart.getPlantId());
+			preparedStatement.executeUpdate();
+			preparedStatement.executeUpdate("commit");
 			
 			
 			
@@ -36,7 +42,10 @@ public class CartDaoImpl {
 			e.printStackTrace();
 		}
         
-         
+         finally {
+        	 ConnectionUtil.closePreparedStatement(preparedStatement, connection);
+        	 
+         }
         
     }
 	
@@ -45,47 +54,30 @@ public class CartDaoImpl {
 public List<Product> fetchCart(int userId){
 	List<Product> productList=new ArrayList<>();
 	String query="select plant_id,plant_name,plant_description,plant_price,category_name from product_details where plant_id in(select plant_id from cart where user_id in ?)";
-	Connection con=ConnectionUtil.getDbConnection();
+	Connection connection=ConnectionUtil.getDbConnection();
+	PreparedStatement preparedStatement=null;
+	ResultSet resultSet=null;
 	try {
-		PreparedStatement pstmt=con.prepareStatement(query);
-		pstmt.setInt(1, userId);
-		ResultSet rs=pstmt.executeQuery();
-		while(rs.next()) {
+		preparedStatement=connection.prepareStatement(query);
+		preparedStatement.setInt(1, userId);
+		resultSet=preparedStatement.executeQuery();
+		while(resultSet.next()) {
 			
-			productList.add(new Product(rs.getInt(1),rs.getString(2),rs.getString(3),rs.getInt(4),rs.getString(5)));
+			productList.add(new Product(resultSet.getInt(PLANTID),resultSet.getString(PLANTNAME),resultSet.getString(PLANTDESCRIPTION),resultSet.getInt(PLANTPRICE),resultSet.getString(CATEGORYNAME)));
 			
 		}
 		
 	} catch (SQLException e) {
 		e.printStackTrace();
 	}
-	
+	finally {
+		ConnectionUtil.closePreparedStatement(preparedStatement, connection,resultSet );
+	}
 	
 	return productList ;
 	}
     
 
-//show cart	    
-    
-    public List<Cart> showCart(){
-		List<Cart> cartList=new ArrayList<Cart>();
-		String cart="select * from cart";
-		Connection con=ConnectionUtil.getDbConnection();
-		try {
-			java.sql.Statement stmt=con.createStatement();
-			ResultSet rs=stmt.executeQuery(cart);
-			while(rs.next()) {
-				Cart showCart=new Cart(rs.getInt(2),rs.getInt(3));
-				cartList.add(showCart);
-			}
-		} catch (SQLException e) {
-			
-			e.printStackTrace();
-		}
-		
-		return cartList;
-		
-	}
 
 	
 }

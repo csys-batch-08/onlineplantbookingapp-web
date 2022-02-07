@@ -4,6 +4,9 @@
 <%@page import="com.onlineplantbooking.model.Product"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
+	
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>	
+	
 <!DOCTYPE html>
 <html>
 <head>
@@ -56,16 +59,14 @@ td {
 </style>
 </head>
 <body>
-<%String search=request.getParameter("search");
-ProductDaoImpl productDao=new ProductDaoImpl();
-List<Product> productList=productDao.filterPlant(search);%>
+
 <nav>
 <div class="menu-bar">
         <ul>
-            <li><a href="homePage.jsp">HOME</a></li>
-            <li><a href="aboutus.jsp">ABOUT</a></li>
-            <li><a href="contactus.jsp">CONTACT</a></li> 
-            <li><a href="myProfile.jsp">PROFILE</a></li>
+            <li><a href="index.jsp">HOME</a></li>
+            <li><a href="aboutUs.jsp">ABOUT</a></li>
+            <li><a href="contactUs.jsp">CONTACT</a></li> 
+            <li><a href="ProfileServlet">PROFILE</a></li>
             </ul>
             </div>
             </nav>
@@ -81,27 +82,22 @@ List<Product> productList=productDao.filterPlant(search);%>
 			<td><b>Plant Price</b></td>
 			<td><b>Buy Now</b></td>
 			<td><b>Add To Cart</b></td>
-		</tr>
+		</tr> 
+		
+ <c:forEach items="${list}" var="search">	
+		
+<tr>
 
-		<%
-User user = (User) session.getAttribute("CurrentUser");
-for(int i=0;i<productList.size();i++){
-	Product product=productList.get(i);
-%>
+<td>${search.plantName}</td>
+<td>${search.plantDescription}</td>
+<td>${search.categoryName}</td>
+<td>${search.plantPrice}</td>	
+<td><a href="orderDetails.jsp?plantName=${search.plantName}&catName=${search.categoryName}">Buy</a>
+ <td><a href="insertCart.jsp?plantId=${search.plantId}&plantName=${search.plantName }&plantPrice=${search.plantPrice }">cart</a> 
+</tr>
+</c:forEach>
 
-		<tr>
-		    
-			<td><%= product.getPlantName() %></td>
-			<td><%= product.getPlantDescription() %></td>
-			<td><%= product.getCategoryName() %></td>
-			<td><%= product.getPlantPrice() %></td>
-			<td><a
-				href="orderDetails.jsp?plantName=<%=product.getPlantName()%>&catName=<%=product.getCategoryName()%>">Buy</a></td>
-			<td><a
-				href="cartInsert.jsp?plantId=<%=product.getPlantId() %>&plantName=<%= product.getPlantName() %>&plantPrice=<%=product.getPlantPrice() %>">cart</a>
-		</tr>
-		<% } %>
-	</table>
+</table>
 
 </body>
 </html>

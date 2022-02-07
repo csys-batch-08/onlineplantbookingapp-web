@@ -3,6 +3,7 @@
 <%@page import="com.onlineplantbooking.model.Product"%>
 <%@page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>        
 <!DOCTYPE html>
 <html>
 <head>
@@ -17,7 +18,7 @@ border-collapse:collapse;
 
 body{
     
-    background-image: url("table.jpg");
+    background-image: url("asset/images/table.jpg");
     background-repeat:no repeat;
     background-size: cover;
     }
@@ -51,10 +52,10 @@ padding: 4px;
 <nav>
 <div class="menu-bar">
         <ul>
-            <li ><a href="homePage.jsp">HOME</a></li>
+            <li ><a href="index.jsp">HOME</a></li>
             <li><a href="admin.jsp">ADMIN</a></li>
-            <li><a href="aboutus.jsp">ABOUT</a></li>
-            <li><a href="contactus.jsp">CONTACT</a></li>        
+            <li><a href="aboutUs.jsp">ABOUT</a></li>
+            <li><a href="contactUs.jsp">CONTACT</a></li>        
     </ul>
     </div>
 
@@ -66,29 +67,24 @@ padding: 4px;
 <td><b>Plant Id</b></td>
 <td><b>Plant Name</b></td>
 <td><b>Plant Description</b></td>
-<td>category Name</td>
-<td>Plant Price</td>
+<td><b>category Name</b></td>
+<td><b>Plant Price</b></td>
 </tr>
-<%ProductDaoImpl productDao=new ProductDaoImpl();
-   List<Product> productList=productDao.showProduct();
-  
-   for(int i=0;i<productList.size();i++)
-   {
-	   Product product=productList.get(i);
-  
-	  %> 
-	   <tr>
-	  <td><%= product.getPlantId() %>
-	  <td><%= product.getPlantName() %></td>
-	  <td><%= product.getPlantDescription() %></td>
-	  <td><%= product.getCategoryName() %></td>
-	  <td><%= product.getPlantPrice() %></td>
-	  <td><a href="deleteProduct.jsp?plantId=<%= product.getPlantId() %>"> Delete</a></td>
-	  </tr>
-	  <% } %>
+
 	  
-	  <% int plantId=Integer.parseInt(request.getParameter("plantId"));
-	  productDao.deleteProduct(plantId); %>                                                           
+	  
+	  <c:forEach items="${product}" var="Showproduct">	  
+	  
+	   <tr>
+	  <td>${Showproduct.plantId }</td>
+	  <td>${Showproduct.plantName }</td>
+	  <td>${Showproduct.plantDescription }</td>
+	  <td>${Showproduct.categoryName }</td>
+	  <td>${Showproduct.plantPrice }</td>
+	  <td><a href="deletePro?plantId=${Showproduct.plantId}">Delete</a></td>
+	  </tr>
+	  </c:forEach>
+	                                                          
 	  </table>
 	  </form>
 </body>

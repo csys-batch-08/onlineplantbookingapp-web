@@ -8,186 +8,263 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.onlineplantbooking.model.Orders;
 import com.onlineplantbooking.model.Product;
 import com.onlineplantbooking.util.ConnectionUtil;
 
 public class ProductDaoImpl {
-   //show product   
+
+	static final String PLANTID = "PLANT_ID";
+	static final String PLANTNAME = "PLANT_NAME";
+	static final String PLANTDESCRIPTION = "PLANT_DESCRIPTION";
+	static final String PLANTPRICE = "PLANT_PRICE";
+	static final String CATEGORYNAME = "CATEGORY_NAME";
+	static final String PICTURE = "PICTURE";
+	static final String PLANTSTATUS = "PLANT_STATUS";
+	static final String ORDERSID = "ORDERS_ID";
+	static final String QUANTITY = "QUANTITY";
+	static final String SUMQUANTITY = "quantiy";
 	
 	
-	public List<Product> showProduct(){
-    	  List<Product> productList=new ArrayList<Product>();
-    	  
-    	  
-    	  String showQuery="select *from product_details";
-    	  Connection con=ConnectionUtil.getDbConnection();
-    	  
-    	  try {
-			Statement stmt=con.createStatement();
-			ResultSet rs=stmt.executeQuery(showQuery);
-			while(rs.next())
-			{
-				Product product=new Product(rs.getInt(1),rs.getString(2),rs.getString(3),Integer.parseInt(rs.getString(4)),rs.getString(5),rs.getString(6));
+	// show product
+	public List<Product> showProduct() {
+		List<Product> productList = new ArrayList<Product>();
+
+		String showQuery = "select PLANT_ID,PLANT_NAME,PLANT_DESCRIPTION,PLANT_PRICE,CATEGORY_NAME,PICTURE from product_details where plant_status='active'";
+		Connection connection = ConnectionUtil.getDbConnection();
+		Statement statement = null;
+		ResultSet resultSet = null;
+		try {
+			statement = connection.createStatement();
+			resultSet = statement.executeQuery(showQuery);
+			while (resultSet.next()) {
+				Product product = new Product(resultSet.getInt(PLANTID), resultSet.getString(PLANTNAME),
+						resultSet.getString(PLANTDESCRIPTION), Integer.parseInt(resultSet.getString(PLANTPRICE)),
+						resultSet.getString(CATEGORYNAME), resultSet.getString(PICTURE));
 				productList.add(product);
-						}
+			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+
 			e.printStackTrace();
+		}
+
+		finally {
+			ConnectionUtil.closeStatement(statement, connection, resultSet);
 		}
 		return productList;
-		   	  
-    	  
-      }
-    public static ResultSet findProductId(Product product)
-    {
-		String Query="select plant_id,plant_price from product_details where plant_name=? and category_name=?";
-		Connection con=ConnectionUtil.getDbConnection();
-		int productId=0;
-		ResultSet rs=null;
-	 
-		    try {
-				PreparedStatement ps=con.prepareStatement(Query);
-				ps.setString(1,product.getPlantName());
-				ps.setString(2,product.getCategoryName());
-				rs=ps.executeQuery();
-				
-				//System.out.println(productId);
-				
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			return rs;
-			
-    }
-			
-			
-    public static Product findProduct(int productId)
-	{
-		String query="select * from product_details where plant_id=?";
-		
-		Connection con=ConnectionUtil.getDbConnection();
-		Product products=null;
-		try {
-			PreparedStatement pre=con.prepareStatement(query);
-			pre.setInt(1, productId);
-			
-			ResultSet rs=pre.executeQuery();
-			
-			if(rs.next())
-			{
-				products=new Product(rs.getInt(1),rs.getString(2), rs.getString(3),Integer.parseInt(rs.getString(4)), rs.getString(5));
-			}
-			
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		
-		
-		return products;
-		
+
 	}
-    
-    
-    
-    
-    
-    public  int updateProduct(int plantId,int plantprice) throws ClassNotFoundException, SQLException {
-    	
-    	
-    			String updateQuery = "update product_details set PLANT_PRICE=?  where PLANT_ID=?";
-				
-				Connection con = ConnectionUtil.getDbConnection();
-				PreparedStatement pstmt2 = con.prepareStatement(updateQuery);
-				System.out.print(plantprice);
-				pstmt2.setInt(1, plantprice);
-				pstmt2.setInt(2, plantId);
-				
-				int i = pstmt2.executeUpdate();
-				System.out.println("update");
-				System.out.println(i + "row updated");
-				return i;
-			
-		}
-							
-//delete method 
-				
-				public static void deleteProduct(int plantId) throws ClassNotFoundException, SQLException {
-					String deleteQuery = "delete from product_details where plant_id=?";
 
-					Connection con = ConnectionUtil.getDbConnection();
-					//System.out.println("Connection successfully");
-					PreparedStatement pstmt = con.prepareStatement(deleteQuery);
-					pstmt.setInt(1, plantId);
-					int i = pstmt.executeUpdate();
-					pstmt.close();
-					con.close();
-				}
-				
-			
-//insert product
-				    public void insertProduct(Product product) throws SQLException  {
-					String insertQuery="insert into product_details(plant_name,plant_description,plant_price,category_name,picture) values(?,?,?,?,?)";
-					Connection con=ConnectionUtil.getDbConnection();
-					PreparedStatement pstmt=con.prepareStatement(insertQuery);
-					pstmt.setString(1,product.getPlantName());
-					pstmt.setString(2,product.getPlantDescription());
-					pstmt.setInt(3,product.getPlantPrice());
-					pstmt.setString(4,product.getCategoryName());
-					pstmt.setString(5,product.getImage());
-			        pstmt.executeUpdate();
-							
-				}
-	public List<Product> filterPlant(String search){
-		List<Product> plantList=new ArrayList<Product>();
-		Product product=null;
-		String Query="select * from product_details where PLANT_NAME like '"+search+"%' or  CATEGORY_NAME like '"+search+"%'"; 
-		ConnectionUtil conUtil=new ConnectionUtil();
-		Connection con=ConnectionUtil.getDbConnection();
+	
+	
+	public List<Product> showInactiveProduct() {
+		List<Product> productList = new ArrayList<Product>();
+
+		String showQuery = "select PLANT_ID,PLANT_NAME,PLANT_DESCRIPTION,PLANT_PRICE,CATEGORY_NAME,PICTURE from product_details where plant_status='inactive'";
+		Connection connection = ConnectionUtil.getDbConnection();
+		Statement statement = null;
+		ResultSet resultSet = null;
+
 		try {
-			Statement stmt=con.createStatement();
-			ResultSet rs=stmt.executeQuery(Query);
-			while(rs.next())
-			{
-				product=new Product(rs.getString(2),rs.getString(3),rs.getInt(4),rs.getString(5));
-			    plantList.add(product);
+			statement = connection.createStatement();
+			resultSet = statement.executeQuery(showQuery);
+			while (resultSet.next()) {
+				Product product = new Product(resultSet.getInt(PLANTID), resultSet.getString(PLANTNAME),
+						resultSet.getString(PLANTDESCRIPTION), Integer.parseInt(resultSet.getString(PLANTPRICE)),
+						resultSet.getString(CATEGORYNAME), resultSet.getString(PICTURE));
+				productList.add(product);
 			}
-			
+			System.out.println(productList);
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+
+			e.printStackTrace();
+		} finally {
+			ConnectionUtil.closeStatement(statement, connection, resultSet);
+		}
+		return productList;
+
+	}
+
+	public List<Product> findProductId(Product product) {
+		String Query = "select plant_id,PLANT_NAME,PLANT_DESCRIPTION,plant_price,CATEGORY_NAME from product_details where plant_name=? and category_name=?";
+		Connection connection = ConnectionUtil.getDbConnection();
+		ResultSet resultSet = null;
+		PreparedStatement preparedStatement = null;
+		List<Product> productList = new ArrayList<Product>();
+		try {
+			preparedStatement = connection.prepareStatement(Query);
+			preparedStatement.setString(1, product.getPlantName());
+			preparedStatement.setString(2, product.getCategoryName());
+			resultSet = preparedStatement.executeQuery();
+			while (resultSet.next()) {
+				Product product1 = new Product(resultSet.getInt(PLANTID), resultSet.getString(PLANTNAME),
+						resultSet.getString(PLANTDESCRIPTION), resultSet.getInt(PLANTPRICE),
+						resultSet.getString(CATEGORYNAME));
+				productList.add(product1);
+
+			}
+
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+		} finally {
+			ConnectionUtil.closePreparedStatement(preparedStatement, connection, resultSet);
+
+		}
+		return productList;
+
+	}
+
+	public Product findProduct(int productId) {
+		String query = "select plant_id,PLANT_NAME,PLANT_DESCRIPTION,plant_price,CATEGORY_NAME from product_details where plant_id=?";
+
+		Connection connection = ConnectionUtil.getDbConnection();
+		Product products = null;
+		PreparedStatement preparedStatement = null;
+		ResultSet resultSet = null;
+		try {
+			preparedStatement = connection.prepareStatement(query);
+			preparedStatement.setInt(1, productId);
+
+			resultSet = preparedStatement.executeQuery();
+
+			if (resultSet.next()) {
+				products = new Product(resultSet.getInt(PLANTID), resultSet.getString(PLANTNAME),
+						resultSet.getString(PLANTDESCRIPTION), Integer.parseInt(resultSet.getString(PLANTPRICE)),
+						resultSet.getString(CATEGORYNAME));
+			}
+
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+		} finally {
+			ConnectionUtil.closePreparedStatement(preparedStatement, connection, resultSet);
+		}
+
+		return products;
+
+	}
+
+	public int updateStatus(int plantId) {
+
+		String updateQuery = "update product_details set plant_status='active'  where PLANT_ID=?";
+		Connection connection = ConnectionUtil.getDbConnection();
+		PreparedStatement PreparedStatement = null;
+		int i = 0;
+		try {
+			PreparedStatement = connection.prepareStatement(updateQuery);
+			PreparedStatement.setInt(1, plantId);
+
+			i = PreparedStatement.executeUpdate();
+		} catch (SQLException e) {
+
 			e.printStackTrace();
 		}
-		
-		return plantList;
-		
-	}				
-				    
-		public ResultSet offerPlant() {
-			String query="select  p.plant_name,p.PLANT_PRICE,p.CATEGORY_NAME,p.plant_id,p.PLANT_DESCRIPTION ,sum(o.quantity) quantiy from product_details p join order_details o on p.plant_id=o.plant_id group by (p.plant_name,p.plant_price,p.CATEGORY_NAME,p.plant_id,p.PLANT_DESCRIPTION ) order by sum(quantity) FETCH FIRST 1 ROWS ONLY";
-					
-			ConnectionUtil conUtil=new ConnectionUtil();
-			Connection con=ConnectionUtil.getDbConnection();
-			ResultSet resultSet=null;
-			try {
-				PreparedStatement preparedStatement=con.prepareStatement(query);
-				resultSet=preparedStatement.executeQuery();
-				
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			return resultSet;
+
+		finally {
+			ConnectionUtil.closePreparedStatement(PreparedStatement, connection);
 		}
-						
-					}
 
+		return i;
 
+	}
 
+	public int updateProduct(int plantId, int plantprice) throws ClassNotFoundException, SQLException {
 
+		String updateQuery = "update product_details set PLANT_PRICE=?  where PLANT_ID=?";
 
-		
-    	
-    
-    
+		Connection connection = ConnectionUtil.getDbConnection();
+		PreparedStatement pstmtPreparedStatement = connection.prepareStatement(updateQuery);
+		pstmtPreparedStatement.setInt(1, plantprice);
+		pstmtPreparedStatement.setInt(2, plantId);
+		int i = pstmtPreparedStatement.executeUpdate();
+		return i;
+
+	}
+
+//delete method 
+
+	public void deleteProduct(int plantId) throws ClassNotFoundException, SQLException {
+		String deleteQuery = "update  product_details set PLANT_STATUS ='inactive' where plant_id=?";
+
+		Connection connection = ConnectionUtil.getDbConnection();
+		PreparedStatement PreparedStatement = connection.prepareStatement(deleteQuery);
+		PreparedStatement.setInt(1, plantId);
+	    PreparedStatement.executeUpdate();
+		PreparedStatement.close();
+		connection.close();
+	}
+
+//insert product
+	public void insertProduct(Product product) throws SQLException {
+		String insertQuery = "insert into product_details(plant_name,plant_description,plant_price,category_name,picture) values(?,?,?,?,?)";
+		Connection connection = ConnectionUtil.getDbConnection();
+		PreparedStatement pstPreparedStatement = connection.prepareStatement(insertQuery);
+		pstPreparedStatement.setString(1, product.getPlantName());
+		pstPreparedStatement.setString(2, product.getPlantDescription());
+		pstPreparedStatement.setInt(3, product.getPlantPrice());
+		pstPreparedStatement.setString(4, product.getCategoryName());
+		pstPreparedStatement.setString(5, product.getImage());
+		pstPreparedStatement.executeUpdate();
+
+	}
+
+	public List<Product> filterPlant(String search) {
+		List<Product> plantList = new ArrayList<Product>();
+		Product product = null;
+		Statement statement = null;
+		ResultSet resultSet = null;
+		String Query = "select PLANT_NAME,PLANT_DESCRIPTION,PLANT_PRICE,CATEGORY_NAME from product_details where PLANT_NAME like '"
+				+ search + "%' or  CATEGORY_NAME like '" + search + "%'";
+		Connection connection = ConnectionUtil.getDbConnection();
+		try {
+			statement = connection.createStatement();
+			resultSet = statement.executeQuery(Query);
+			while (resultSet.next()) {
+				product = new Product(resultSet.getString(PLANTNAME), resultSet.getString(PLANTDESCRIPTION),
+						resultSet.getInt(PLANTPRICE), resultSet.getString(CATEGORYNAME));
+				plantList.add(product);
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			ConnectionUtil.closeStatement(statement, connection, resultSet);
+
+		}
+
+		return plantList;
+
+	}
+
+	public List<Orders> offerPlant() {
+		String query = "select  p.plant_name,p.PLANT_PRICE,p.CATEGORY_NAME,p.plant_id,p.PLANT_DESCRIPTION ,p.PICTURE,sum(o.quantity) as quantiy from product_details p join order_details o on p.plant_id=o.plant_id group by (p.plant_name,p.plant_price,p.CATEGORY_NAME,p.plant_id,p.PLANT_DESCRIPTION,p.PICTURE ) order by sum(quantity) FETCH FIRST 1 ROWS ONLY";
+		Connection connection = ConnectionUtil.getDbConnection();
+		ResultSet resultSet = null;
+		PreparedStatement preparedStatement = null;
+		List<Orders> products = new ArrayList<Orders>();
+
+		try {
+			preparedStatement = connection.prepareStatement(query);
+			resultSet = preparedStatement.executeQuery();
+			while (resultSet.next()) {
+				Product product = new Product(resultSet.getInt(PLANTID), resultSet.getString(PLANTNAME),
+						resultSet.getString(PLANTDESCRIPTION), resultSet.getInt(PLANTPRICE),
+						resultSet.getString(CATEGORYNAME), resultSet.getString(PICTURE));
+
+				Orders order = new Orders();
+				order.setProduct(product);
+				order.setQuantity(resultSet.getInt(SUMQUANTITY));
+				products.add(order);
+
+			}
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+		} finally {
+			ConnectionUtil.closePreparedStatement(preparedStatement, connection, resultSet);
+		}
+		return products;
+	}
+
+}

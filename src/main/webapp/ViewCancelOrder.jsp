@@ -4,6 +4,8 @@
 <%@page import="com.onlineplantbooking.model.User"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+    
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>    
 <!DOCTYPE html>
 <html>
 <head>
@@ -12,7 +14,7 @@
 <style>
 body{
     
-    background-image: url("table.jpg");
+    background-image: url("asset/images/table.jpg");
     background-repeat:no repeat;
     background-size: cover;
     }
@@ -53,7 +55,7 @@ padding: 4px;
             <li><a href="homePage.jsp">HOME</a></li>
             <li><a href="aboutus.jsp">ABOUT</a></li>
             <li><a href="contactus.jsp">CONTACT</a></li> 
-            <li><a href="ordercancel.jsp">CANCELORDER</a></li>
+            <li><a href="ShowCancelOrderServlet">CANCELORDER</a></li>
             
 </ul>
 </div>
@@ -71,24 +73,20 @@ padding: 4px;
 <th>Order Status</th>
 </tr>
 
-<% User user=(User)session.getAttribute("currentUser");
-OrdersDaoImpl orderDao=new OrdersDaoImpl();
-List<Orders> orderList=orderDao.showCancelOrder(user);
-for(int i=0;i<orderList.size();i++){
-	Orders order=orderList.get(i);
-	
-%>
-<tr>
-<td><%=order.getProduct().getPlantName() %></td>
-<td><%=order.getUser().getName() %></td>
-<td><%=order.getQuantity() %></td>
-<td><%=order.getTotalPrice() %></td>
-<td><%=order.getAddress() %></td>
-<td><%=order.getOrderDate() %></td>
-<td><%=order.getOrderStatus() %></td>
-</tr>
 
-<%} %>
+
+<c:forEach items="${order}" var="orderList">
+<tr>
+<td>${orderList.product.plantName}</td>
+<td>${orderList.user.name }</td>
+<td>${orderList.quantity }</td>
+<td>${orderList.totalPrice }</td>
+<td>${orderList.address }</td>
+<td>${orderList.orderDate }</td>
+<td>${orderList.orderStatus }</td>
+</tr>
+</c:forEach>
+
 </table>
 </div>
 </body>

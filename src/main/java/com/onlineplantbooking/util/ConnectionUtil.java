@@ -5,6 +5,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 public class ConnectionUtil {
 	public static Connection getDbConnection()
@@ -28,20 +29,80 @@ public class ConnectionUtil {
 	}
 	return con;
 	}
-	public void closeConnection(ResultSet rs, PreparedStatement pstmt, Connection con) throws SQLException
-	{
-	if(rs != null)
-	{
-	rs.close();
-	}
-	if(pstmt != null)
-	{
-	pstmt.close();
-	}
-	if(con != null)
-	{
-	con.close();
-	}
-	}
+	 public static  void closePreparedStatement(PreparedStatement preparedStatement,Connection connection) {
+		 try {
+
+		 if(preparedStatement!=null) {
+
+		 preparedStatement.close();
+		 }
+		 if(connection!=null) {
+		 connection.close();
+		 }
+
+
+		 } catch (SQLException e) {
+		 e.printStackTrace();
+		 }
+
+		 }
+		 public static void closeStatement (Statement statement,Connection connection) {
+		 try {
+
+		 if(statement!=null) {
+		 statement.close();
+		 }
+		 if(connection!=null) {
+		 connection.close();
+		 }
+
+		 }
+		 catch (SQLException e) {
+		 e.printStackTrace();
+		 }
+
+		 }
+		 public static  void closePreparedStatement(PreparedStatement preparedStatement,Connection connection,ResultSet resultSet) {
+		 try {
+		 if(resultSet !=null) {
+		 resultSet.close();
+		 }
+
+		 if(preparedStatement!=null) {
+
+		 preparedStatement.close();
+		 }
+		 if(connection!=null) {
+		 connection.close();
+		 }
+
+
+		 } catch (SQLException e) {
+		 e.printStackTrace();
+		 }
+
+		 }
+		 public static void closeStatement (Statement statement,Connection connection,ResultSet resultSet) {
+		 try {
+		 if(resultSet!=null) {
+		 resultSet.close();
+		 }
+
+		 if(statement!=null) {
+		 statement.close();
+		 }
+		 if(connection!=null) {
+		 connection.close();
+		 }
+
+		 }
+		 catch (SQLException e) {
+		 e.printStackTrace();
+		 }
+
+		 }
+
+
+
 
 }

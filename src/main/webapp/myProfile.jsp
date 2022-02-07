@@ -1,9 +1,8 @@
-<%@page import="java.util.ArrayList"%>
-<%@page import="com.onlineplantbooking.model.User"%>
-<%@page import="java.util.List"%>
-<%@page import="com.onlineplantbooking.daoImpl.UserDaoImpl"%>
+
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+    
 <!DOCTYPE html>
 <html>
 <head>
@@ -12,7 +11,7 @@
 <style>
 body{
     
-    background-image: url("table.jpg");
+    background-image: url("asset/images/table.jpg");
     background-repeat:no repeat;
     background-size: cover;
     }
@@ -75,26 +74,13 @@ padding: 4px;
 </head>
 <body>
 
-<%
-UserDaoImpl userDao=new UserDaoImpl();
-int userId=(int)session.getAttribute("userId");
-List<User> userList=new ArrayList<User>();
-userList=userDao.myProfile(userId);
-
-
-%>
-<%
-int i=0;
-for(User showUser:userList){
-	i++;
-	%>
-	<nav>
+<nav>
 <div class="menu-bar">
         <ul>
-            <li ><a href="homePage.jsp">HOME</a></li>
-            <li><a href="aboutus.jsp">ABOUT</a></li>
-            <li><a href="contactus.jsp">CONTACT</a></li>
-            <li><a href="buyProduct.jsp">BUY</a>       
+            <li ><a href="index.jsp">HOME</a></li>
+            <li><a href="aboutUs.jsp">ABOUT</a></li>
+            <li><a href="contactUs.jsp">CONTACT</a></li>
+            <li><a href="ShowProductServlet">BUY</a>       
     </ul>
     </div>
 
@@ -104,21 +90,22 @@ for(User showUser:userList){
     <div class="gfg">
     <div class="gfg1">
     <div class="gfg2">
-	<b>Name:</b><%=showUser.getName() %><br><br>
-	<b>EmailId:</b><%= showUser.getEmailId() %><br><br>
-	<b>Password:</b><%= showUser.getPassword() %><br><br>
-	<b>Mobile Number:</b><%=showUser.getMobileNumber() %><br><br>
+     <c:forEach items="${user}" var="userProfile">
+    
+    
+	<b>Name:</b>${userProfile.name }<br><br>
+	<b>EmailId:</b>${userProfile.emailId }<br><br>
+	<b>Password:</b>${userProfile.password }<br><br>
+	<b>Mobile Number:</b>${userProfile.mobileNumber }<br><br>
 
-	<b>Wallet:</b><%= showUser.getWallet() %><br><br>
+	<b>Wallet:</b>${userProfile.wallet}<br><br>
 	<a href="rechargeWallet.jsp">Recharge Wallet</a>
+	</c:forEach>
 	</div>
 	</div>
 	</div>
 	</div>
-<%
-}
 
-%>
 
 
 </body>

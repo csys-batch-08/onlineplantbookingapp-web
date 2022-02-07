@@ -3,6 +3,8 @@
 <%@page import="com.onlineplantbooking.daoImpl.*"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+    
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>    
 <!DOCTYPE html>
 <html>
 <head>
@@ -11,7 +13,7 @@
 <style>
 body{
     
-    background-image: url("table.jpg");
+    background-image: url("asset/images/table.jpg");
     background-repeat:no repeat;
     background-size: cover;
     }
@@ -50,52 +52,51 @@ padding: 4px;
 <nav>
 <div class="menu-bar">
         <ul>
-            <li><a href="homePage.jsp">HOME</a></li>
-            <li><a href="aboutus.jsp">ABOUT</a></li>
-            <li><a href="contactus.jsp">CONTACT</a></li>
-            <li><a href="myProfile.jsp">Profile</a></li>      
+            <li><a href="index.jsp">HOME</a></li>
+            <li><a href="aboutUs.jsp">ABOUT</a></li>
+            <li><a href="contactUs.jsp">CONTACT</a></li>
+            <li><a href="ProfileServlet">Profile</a></li>      
     </ul>
     </div>
 
 </nav>
 
-<%
 
-User rs=(User)session.getAttribute("currentUser");
-String pName=request.getParameter("plantName");
-String catName=request.getParameter("catName");
-ProductDaoImpl proDao=new ProductDaoImpl();
-Product product=new Product(pName,catName);
 
-ResultSet rs1=proDao.findProductId(product);
-session.setAttribute("currentPlant",product);
-if(rs1.next()){
-%><br><br><br><br>
+<br><br><br><br>
+
 <div class="one">
 <form action="ordersDetailServlet"  onmouseover="myFunct()">
 <h1 >BUY YOUR PLANT</h1>
-<label for="plantId" ><b>PlantName:</b></label>
-<input type="text" value="<%=product.getPlantName() %>"><br><br>
+<c:forEach items="${currentPlant}" var="currentplant">
+<label for="plantId" >PlantName:</label>
+
+<input type="text" id="plantId" value="${currentplant.plantName}">
+</c:forEach>
+<br><br>
 <b>Quantity:</b><input type="number" onkeyup="myFunct()" value=1 name="quantity" id="quantity" min="1"><br><br>
 <b>Address:</b><input type="text"  name="addresss"   id="address" required><br><br>
-<b>Total Price:</b><input type="number"  name="total" id="price"><br><br>
+<b>Total Price:</b><input type="number"  name="total"   id="price"><br><br>
 <br>
 <button type="submit" id="submit"> Submit</button>
+<input type="reset">
+
 </form>
 </div>
+
+<c:forEach items="${productPrice}" var="productPr">
 <script type="text/javascript">
 function myFunct() {
 	var count=document.getElementById("quantity").value;
 	var totalPrice=document.getElementById("price");
 	console.log(count);
-	totalPrice.value=count*<%=rs1.getInt(2)%>;
+	totalPrice.value=count*${productPr.plantPrice} ;
 	console.log(totalPrice.value);
 	
 }
 
-<%}%>
 </script>
+</c:forEach>
 <br><br>
-
 </body>
 </html>

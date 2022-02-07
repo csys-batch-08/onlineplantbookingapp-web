@@ -5,14 +5,15 @@
 <head>
 <meta charset="ISO-8859-1">
 <title>Insert title here</title>
-<link rel="stylesheet" href="style1.css">
+<link rel="stylesheet" href="login.css">
 <style>
 body{
     
-    background-image: url("table.jpg");
+    background-image: url("asset/images/table.jpg");
     background-repeat:no repeat;
     background-size: cover;
     }
+    
 #name{
   width: 300px;
   border-radius :20px;
@@ -25,6 +26,7 @@ body{
   border: none;
   outline: none;
 }
+
 #button{
   border-radius:none;
   padding: 10px 20px;
@@ -36,16 +38,16 @@ body{
   margin-left: none;
   font-size: 15px;
 }
+    
 
 </style>
 </head>
 <body>
-
 <div class="container"> 
 <div class="card">
 <form action="login" method="post">
 <h2 style="color:white">Login Form</h2>
-<input type="email" placeholder="Email_id" name="loginemail" required id="name" pattern="[a-z0-9]+[@][a-z]+[.][a-z]+{8,15}"><br>
+<input type="email" placeholder="EmailId" name="loginemail" required id="name" pattern="[a-z0-9]+[@][a-z]+[.][a-z]+{8,15}"><br>
 <input type="password" placeholder="password" name="loginpassword" required id="name" pattern="[A-Za-z0-9@#$]{8,10}"><br>
 <button type="submit" id="button">Submit</button>
 </form>

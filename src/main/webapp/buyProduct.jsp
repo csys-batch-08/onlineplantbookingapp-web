@@ -1,9 +1,8 @@
-<%@page import="com.onlineplantbooking.model.User"%>
-<%@page import="com.onlineplantbooking.daoImpl.ProductDaoImpl"%>
-<%@page import="java.util.List" %>
-<%@page import="com.onlineplantbooking.model.Product"%>
+
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+ <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+    
 <!DOCTYPE html>
 <html>
 <head>
@@ -63,7 +62,7 @@ padding: 4px;
 </style>
 </head>
 <body>
-<form action="search.jsp" >
+<form action="SearchProductServlet" >
 <h1 style="text-align: center;"> Show Plant</h1>
 
 <div id="searchbar">
@@ -76,13 +75,14 @@ padding: 4px;
 <nav>
 <div class="menu-bar">
         <ul>
-            <li><a href="homePage.jsp">HOME</a></li>
-            <li><a href="aboutus.jsp">ABOUT</a></li>
-            <li><a href="contactus.jsp">CONTACT</a></li> 
-            <li><a href="myProfile.jsp">PROFILE</a></li>
-            <li><a href="userCart.jsp">CART</a></li>
-            <li><a href="ordercancel.jsp">CANCELORDER</a></li>
-        	<li><a href="Offer.jsp">OFFER</a></li>
+            <li><a href="index.jsp">HOME</a></li>
+            <li><a href="aboutUs.jsp">ABOUT</a></li>
+            <li><a href="contactUs.jsp">CONTACT</a></li> 
+            <li><a href="ProfileServlet">PROFILE</a></li>
+            <li><a href="ViewUserCartServlet">MYCART</a></li>
+            <li><a href="ShowCancelOrderServlet">CANCELORDER</a></li>
+        	<li><a href="offerServ">OFFER</a></li>
+        	<li><a href="index.jsp">LOGOUT</a></li> 
             
             
     </ul>
@@ -100,33 +100,24 @@ padding: 4px;
 <td><b>Plant Price</b></td>
 <td><b>Buy Now</b></td>
 <td><b>Add To Cart</b></td>
-
-
 </tr>
-<%ProductDaoImpl productDao=new ProductDaoImpl();
-   List<Product> productList=productDao.showProduct();
- 	//User user=(User)session.getAttribute("currentUser");
-   for(int i=0;i<productList.size();i++)
-   { 
-	   Product product=productList.get(i);
-	   session.setAttribute("plantName", product.getPlantName());
-	   session.setAttribute("plantPrice", product.getPlantPrice());
-	   session.setAttribute("plantId", product.getPlantId());
 
-	  %> 
-	  <tr>
-	  <td><img alt="#alter" src="images1/<%=product.getImage() %>" width="200" height="200"></td>
-	  <td><%= product.getPlantName() %></td>
-	  <td><%= product.getPlantDescription() %></td>
-	  <td><%= product.getCategoryName() %></td>
-	  <td><%= product.getPlantPrice() %></td>
-	  <td><a href="orderDetails.jsp?plantName=<%=product.getPlantName()%>&catName=<%=product.getCategoryName()%>">Buy</a></td>
-	  <td><a href="cartInsert.jsp?plantId=<%=product.getPlantId() %>&plantName=<%= product.getPlantName() %>&plantPrice=<%=product.getPlantPrice() %>">cart</a> 
-	  </tr>
-	  <% } %>	  
-	  </table>
+
 	  
-	  </body>
+	  <c:forEach items="${ShowProduct}" var="product">
+	  <tr>
+	  <td><img alt="#alter" src="asset/images/${product.image}" width="200" height="200"></td>
+	  <td>${product.plantName}</td>
+	  <td>${product.plantDescription}</td>
+	  <td>${product.categoryName}</td>
+	  <td>${product.plantPrice}</td>
+	  <td><a href="BuyPlantServlet?plantName=${product.plantName}&catName=${product.categoryName}">Buy</a>
+	  <td><a href="CartInsertServlet?plantId=${product.plantId}&plantName=${product.plantName }&plantPrice=${product.plantPrice }">cart</a>
+	  </td>
+	  </tr>
+	  </c:forEach>
+	  </table>
+	   </body>
 	  </html>
 	  
 	  

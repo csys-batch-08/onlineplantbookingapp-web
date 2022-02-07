@@ -8,7 +8,7 @@
 <style>
 body{
     
-    background-image: url(" table.jpg");
+    background-image: url("asset/images/table.jpg");
     background-repeat:no repeat;
     background-size: cover;
     }
@@ -45,10 +45,10 @@ padding: 4px;
 <nav>
 <div class="menu-bar">
         <ul>
-            <li ><a href="homePage.jsp">HOME</a></li>
+            <li ><a href="index.jsp">HOME</a></li>
             <li><a href="admin.jsp">ADMIN</a></li>
-            <li><a href="aboutus.jsp">ABOUT</a></li>
-            <li><a href="contactus.jsp">CONTACT</a></li>        
+            <li><a href="aboutUs.jsp">ABOUT</a></li>
+            <li><a href="contactUs.jsp">CONTACT</a></li>        
     </ul>
     </div>
 
@@ -56,13 +56,13 @@ padding: 4px;
 
 <form action="insertProduct" method="post" >
  <div class="one">
-<lable><h2>Enter Plant Name</h2></lable>
+<lable><h3>Enter Plant Name</h3></lable>
 <input type="text" name="plantname" id="plantname" required><br>
-<lable><h2>Enter plant description</h2></lable>
+<lable><h3>Enter plant description</h3></lable>
 <input type="text" name="plantdescription" id="plantdescription" required><br>
-<lable><h2>Enter plant price</h2></lable>
+<lable><h3>Enter plant price</h3></lable>
 <input type="number" name=" plantprice" id="plantprice" min="1" required><br>
-<lable><h2>Enter plant category</h2></lable>
+<lable><h3>Enter plant category</h3></lable>
 <select name="category" id="category">
 <option value="medicinal">medicinal</option>
 <option value="bamboo" >bamboo</option>

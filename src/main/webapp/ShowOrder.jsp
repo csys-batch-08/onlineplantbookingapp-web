@@ -5,6 +5,7 @@
 <%@page import="com.onlineplantbooking.daoImpl.OrdersDaoImpl"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>    
 <!DOCTYPE html>
 <html>
 <head>
@@ -17,7 +18,7 @@ table,tr,th, td {
 }
 body{
     
-    background-image: url("table.jpg");
+    background-image: url("asset/images/table.jpg");
     background-repeat:no repeat;
     background-size: cover;
     }
@@ -56,10 +57,10 @@ padding: 4px;
 <nav>
 <div class="menu-bar">
         <ul>
-            <li ><a href="homePage.jsp">HOME</a></li>
-            <li><a href="aboutus.jsp">ABOUT</a></li>
-            <li><a href="contactus.jsp">CONTACT</a></li>
-            <li><a href="ordercancel.jsp">CANCELORDER</a>        
+            <li ><a href="index.jsp">HOME</a></li>
+            <li><a href="aboutUs.jsp">ABOUT</a></li>
+            <li><a href="contactUs.jsp">CONTACT</a></li>
+            <li><a href="ShowCancelOrderServlet">CANCELORDER</a>        
     </ul>
     </div>
 
@@ -75,25 +76,21 @@ padding: 4px;
 <td><b>Order Date</b></td>
 </tr>
 
-<%OrdersDaoImpl orderDao=new OrdersDaoImpl();
-List<User> userList=(List<User>) session.getAttribute("UpdateList");
 
-List<Orders> orderList=orderDao.ShowOrder(userList.get(0));
-for(int i=0;i<orderList.size();i++){
-	Orders order=orderList.get(i);
-%>
+<c:forEach items="${showOrder}" var="order">
 <tr>
-<td><%= order.getUser().getName()%></td>
-<td><%= order.getProduct().getPlantName() %></td>
-<td><%= order.getQuantity() %></td>
-<td><%= order.getTotalPrice() %></td>
-<td><%= order.getOrderDate() %></td>
-</tr>
-<%} %>
+<td>${order.user.name}</td>
+<td>${order.product.plantName}</td>
+<td>${order.quantity }</td>
+<td>${order.totalPrice }</td>
+<td>${order.orderDate }</td>
+</c:forEach>
 </table>
 <br><br>
 </div>
-<center><strong><h2>Wallet Balane:</h2></strong><lable><%=userList.get(0).getWallet() %></lable></center>
-<!--  <a href="rechargeWallet.jsp">Wallet</a> -->
+
+<c:set var="wallet" scope="session" value="${User}"/>
+<center><strong><h2>Wallet Balane:</h2></strong>${wallet }</center>
+
 </body>
 </html>

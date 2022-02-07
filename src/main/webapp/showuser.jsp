@@ -3,6 +3,10 @@
 <%@page import="java.util.List" %>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+    
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+        
+    
 <!DOCTYPE html>
 <html>
 <head>
@@ -18,7 +22,7 @@ border-collapse:collapse;
 
 body{
     
-    background-image: url("table.jpg");
+    background-image: url("asset/images/table.jpg");
     background-repeat:no repeat;
     background-size: cover;
     }
@@ -75,29 +79,24 @@ padding: 4px;
 <td><b>Mobile Number</b></td>
 <td><b>Address</b></td>
 </tr>
-<%
-UserDaoImpl userDao=new UserDaoImpl();
-   List<User> userList=userDao.showAllUser();
 
-   for(int i=0;i<userList.size();i++)
-   {
-	  
-	   User user=userList.get(i);
   
-  %> 
+   <c:forEach items="${user}" var="User">
+   
 	  <tr>
-	  <td><%= user.getUserId() %></td>
-	  <td><%= user.getName() %></td>
-	  <td><%= user.getEmailId() %></td>
-	  <td><%= user.getPassword() %></td>
-	  <td><%= user.getMobileNumber() %></td>
-	  <td><%= user.getAddress() %></td>
+	  <td>${User.userId }</td>
+	  <td>${User.name}</td>
+	  <td>${User.emailId}</td>
+	  <td>${User.password}</td>
+	  <td>${User.mobileNumber }</td>
+	  <td>${User.address}</td>
 	 
 	   </tr>
-	  <% } %>	  
-	  <%  int userId=Integer.parseInt(request.getParameter("userId"));
-	  userDao.deleteUser(userId); %>
-	  </table>
+	   
+	 
+	 </c:forEach>
+	 </table>
+	  
 	  </form>
 </body>
 </html>

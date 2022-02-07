@@ -4,11 +4,14 @@
 <%@page import="com.onlineplantbooking.daoImpl.OrdersDaoImpl"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>    
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="ISO-8859-1">
 <title>orderCancel</title>
+
+
 <style>
 table,tr,th, td {
   border: 5px solid black;
@@ -16,7 +19,7 @@ table,tr,th, td {
 }
 body{
     
-    background-image: url("table.jpg");
+    background-image: url("asset/images/table.jpg");
     background-repeat:no repeat;
     background-size: cover;
     }
@@ -60,30 +63,32 @@ padding: 4px;
 <li><a href="homePage.jsp">HOME</a></li>
 <li><a href="aboutus.jsp">ABOUT</a></li>
 <li><a href="contactus.jsp">CONTACT</a></li>
-<li><a href="myProfile.jsp">PROFILE</a></li>
-<li><a href="buyProduct.jsp">BUY</a></li>
-<li><a href="ViewCancelOrder.jsp">CANCELHISTORY</a></li>
+<li><a href="ProfileServlet">PROFILE</a></li>
+<li><a href="ShowProductServlet">BUY</a></li>
+<li><a href="UserCancelOrderServlet">CANCELHISTORY</a></li>
 </ul> 
 </div>
 </nav>
+<c:set var = "cancelOrder" scope = "session" value = "${cancel}"/>
+	<c:if test="${not empty cancelOrder}">
+			<h2><c:out value="${cancelOrder}" /></h2>
+			<c:remove var="cancelOrder"/>
+		</c:if>
 
-<%if(session.getAttribute("cancel")!=null){ %>
-<h1> order Cancelled Already successfully</h1>
-<%session.removeAttribute("cancel"); %>
-<%} %>
+	<c:if test="${not empty cancelsuccess }">
+			<h2>successfully cancel</h2>
+			<c:remove var="cancelsuccess"/>
+		</c:if>
+		
+<c:set var = "refundAmt" scope = "session" value = "${refund}"/>
+	<c:if test="${not empty refundAmt}">
+			<h2><c:out value="${refundAmt}" /></h2>
+			<c:remove var="refundAmt"/>
+		</c:if>
 
-<%if(session.getAttribute("cancelsuccess")!=null){
-	%>
-	<h2>Order Cancel Successfully</h2>
-	<%session.removeAttribute("cancelsuccess"); %>
-<%} %>
-<%if(session.getAttribute("refund")!=null){ %>
-<h1>amount refunded to your wallet</h1>
-<%session.removeAttribute("refund"); %>
-<%} %>
 
-<h1 style="text-align: left;"> Cancel Order</h1>
-<div class="one">
+<h1 style="text-align: center;"> Cancel Order</h1>
+<div class="one"> 
 <table>
 <tr>
 <td><b>User Name</b></td>
@@ -93,27 +98,18 @@ padding: 4px;
 <td><b>Order Date</b></td>
 <td><b>cancel</b>
 </tr>
-<%
-User user=(User)session.getAttribute("currentUser");
-OrdersDaoImpl orderDao=new OrdersDaoImpl();
 
 
-List<Orders> orderList=orderDao.ShowOrders(user);
-for(int i=0;i<orderList.size();i++){
-	Orders order=orderList.get(i);
-%>
+<c:forEach items="${order}" var="orderList">
 <tr>
-
-<td><%= order.getUser().getName()%></td>
-<td><%= order.getProduct().getPlantName() %></td>
-<td><%= order.getQuantity() %></td>
-<td><%= order.getTotalPrice() %></td>
-<td><%= order.getOrderDate() %></td>
-<td><a href="ordercancelserv?orderid=<%=order.getOrderid() %>&price=<%= order.getTotalPrice()%>">cancel</a></td>
+<td>${orderList.user.name }</td>
+<td>${orderList.product.plantName}</td>
+<td>${orderList.quantity }</td>
+<td>${orderList.totalPrice }</td>
+<td>${orderList.orderDate }</td>
+<td><a href="ordercancelserv?orderid=${orderList.orderid }&price=${orderList.totalPrice }">cancel</a></td>
 </tr>
-
-<%} %>
-
+</c:forEach>
 </table>
 </div>
 </body>

@@ -8,10 +8,14 @@
 <style>
 body{
     
-    background-image: url("table.jpg");
+    background-image: url("asset/images/table.jpg");
     background-repeat:no repeat;
     background-size: cover;
     }
+a{
+text-decoration: none;
+}    
+    
 .one{
  top :100px;
  margin-left:500px;
@@ -45,9 +49,10 @@ padding: 4px;
  <nav>
 <div class="menu-bar">
         <ul>
-            <li ><a href="homePage.jsp">HOME</a></li>
-            <li><a href="aboutus.jsp">ABOUT</a></li>
-            <li><a href="contactus.jsp">CONTACT</a></li>        
+            <li ><a href="index.jsp">HOME</a></li>
+            <li><a href="aboutUs.jsp">ABOUT</a></li>
+            <li><a href="contactUs.jsp">CONTACT</a></li>
+            <li><a href="index.jsp">LOGOUT</a></li>       
     </ul>
     </div>
 
@@ -58,10 +63,12 @@ padding: 4px;
 
 <div class="one">
 <h1>WELCOME ADMIN</h1>
-<a href="showuser.jsp?userId=0"><h3>Show all user</h3></a>
-<a href="showProduct.jsp?"><h3>Show all product</h3></a>
-<a href="deleteProduct.jsp?plantId=0"><h3>Delete  product</h3></a>
-<a href="insertProduct.jsp"><h3> Add New Product</h3></a>
+
+<a href="ShowUserServlet"><h3>Show all User</h3></a>
+<a href="AdminUpdateProServlet"><h3>Show all product</h3></a>
+<a href="AdminDeleteproServlet"><h3>Delete  product</h3></a>
+<a href="showInactive"><h3>Show Inactive Plant</h3></a>
+<a href="addNewProduct.jsp"><h3>Add New Product</h3></a>
 <form action="DeleteProductServlet" >
 </form>
 </div>
