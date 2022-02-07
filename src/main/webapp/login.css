@@ -1,0 +1,20 @@
+@charset "ISO-8859-1";
+*{
+  padding: 0;
+  margin: 0;
+  font-family: sans-serif;
+}
+
+
+ .container{
+      top:50%;
+      left:50%;
+      position:absolute;
+      transform:translate(-50%,-50%);
+}
+.card{
+  padding: 60px 40px 50px 40px;
+  background:#82ac85;
+  border-radius: 5px;
+  top: 20%;
+}
