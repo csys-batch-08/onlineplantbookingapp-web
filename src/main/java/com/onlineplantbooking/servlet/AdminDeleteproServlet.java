@@ -14,23 +14,23 @@ import javax.servlet.http.HttpSession;
 import com.onlineplantbooking.daoImpl.ProductDaoImpl;
 import com.onlineplantbooking.model.Product;
 
-
 @WebServlet("/AdminDeleteproServlet")
 public class AdminDeleteproServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-  
-	
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		ProductDaoImpl productDao=new ProductDaoImpl();
-		List<Product> productList=productDao.showProduct();
-		HttpSession session=request.getSession();
-		session.setAttribute("product",productList );
-		RequestDispatcher dispatcher=request.getRequestDispatcher("deleteProduct.jsp");
+
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		ProductDaoImpl productDao = new ProductDaoImpl();
+		List<Product> productList = productDao.showProduct();
+		HttpSession session = request.getSession();
+		session.setAttribute("product", productList);
+		RequestDispatcher dispatcher = request.getRequestDispatcher("deleteProduct.jsp");
 		dispatcher.forward(request, response);
-		
+
 	}
 
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		doGet(request, response);
 	}
 

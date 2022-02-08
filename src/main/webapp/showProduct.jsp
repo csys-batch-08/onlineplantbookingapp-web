@@ -10,54 +10,10 @@
 <head>
 <meta charset="ISO-8859-1">
 <title>List of products</title>
+<link rel="stylesheet" type="text/css" href="asset\css\showProduct.css">
 
 
 
-<style>
-
-table, tr, td,th {
-  border: 5px solid black;
-  border-collapse: collapse;
-}
-body{
-       
-    background-color:pink;
-    background-repeat:no repeat;
-    background-size: cover;
-    }
-a{
-text-decoration: none;
-}    
-td{
- font-size: 20px;
-}    
-.searchbar {
-	position: relative;
-	top: 0px;
-	left: 1050px;
-}
-
-.menu-bar{
-    background:#ace600;
-    text-align: center;
-}
-.menu-bar ul{
-    display:inline-flex;
-    list-style: none;
-    color: #fff;
-}
-.menu-bar ul li
-{
-width: 100px;
-margin: 15px;
-padding: 4px;
-}
-.menu-bar ul li a input{
-    text-decoration:none;
-    font-size: 20px;
-}
-
-</style>
 </head>
 <body>
 <h1 style="text-align: center;"> Show Plant</h1>

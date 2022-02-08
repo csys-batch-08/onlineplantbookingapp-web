@@ -12,49 +12,8 @@
 <head>
 <meta charset="ISO-8859-1">
 <title>Online Plant Booking</title>
+<link rel="stylesheet" type="text/css" href="asset\css\showUser.css">
 
-<style>
-table,td,tr
-{
-border:5px solid black;
-border-collapse:collapse;
-}
-
-body{
-    
-    background-image: url("asset/images/table.jpg");
-    background-repeat:no repeat;
-    background-size: cover;
-    }
-td{
-font-size= 20px;
-} 
-.menu-bar{
-    background:#ace600;
-    text-align: center;
-}
-.menu-bar ul{
-    display:inline-flex;
-    list-style: none;
-    color: #fff;
-}
-.menu-bar ul li
-{
-width: 100px;
-margin: 15px;
-padding: 4px;
-}
-.menu-bar ul li a{
-    text-decoration:none;
-    font-size: 20px;
-}
-
-
-.center {
-  margin-left: auto;
-  margin-right: auto;
-}   
-</style>
 </head>
 <body>
 <h1 style="text-align: center;"> Show User</h1>

@@ -1,5 +1,4 @@
-<%@page import="com.onlineplantbooking.model.Product"%>
-<%@page import="java.sql.ResultSet"%>
+
  <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
@@ -8,43 +7,7 @@
 <head>
 <meta charset="ISO-8859-1">
 <title>offer  </title>
-<style>
-table,td,tr
-{
-border:5px solid black;
-border-collapse:collapse;
-}
-
-body{
-    
-    background-image: url("asset/images/table.jpg");
-    background-repeat:no repeat;
-    background-size: cover;
-    }
-td{
-font-size: 20px;
-}
-
-.menu-bar{
-    background:#ace600;
-    text-align: center;
-}
-.menu-bar ul{
-    display:inline-flex;
-    list-style: none;
-    color: #fff;
-}
-.menu-bar ul li
-{
-width: 100px;
-margin: 15px;
-padding: 4px;
-}
-.menu-bar ul li a input{
-    text-decoration:none;
-    font-size: 20px;
-}  
-</style>
+<link rel="stylesheet" type="text/css" href="asset\css\offer.css">
 </head>
 <body>
 <form>

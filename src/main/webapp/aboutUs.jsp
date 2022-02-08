@@ -5,22 +5,9 @@
 <head>
 <meta charset="ISO-8859-1">
 <title>Insert title here</title>
-<style>
-body{
-    
-    background-image: url("about.jpg");
-    background-repeat:no repeat;
-    background-size: cover;
-    }
-p{
-
-font-size:120%
-}   
+<link rel="stylesheet" type="text/css" href="asset\css\about.css">
 
 
-
-    
-</style>
 </head>
 <h1 style="text-align: center;">About Us</h1>
 <body>

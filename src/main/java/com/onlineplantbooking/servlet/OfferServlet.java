@@ -24,15 +24,15 @@ public class OfferServlet extends HttpServlet {
 			throws ServletException, IOException {
 
 		ProductDaoImpl productDao = new ProductDaoImpl();
-		List<Orders> order= productDao.offerPlant();
-		List<Product> productList=new ArrayList();
-		for (int i=0;i<order.size();i++) {
-			Orders orders=order.get(i);
-			Product product=orders.getProduct();
-			
+		List<Orders> order = productDao.offerPlant();
+		List<Product> productList = new ArrayList<Product>();
+		for (int i = 0; i < order.size(); i++) {
+			Orders orders = order.get(i);
+			Product product = orders.getProduct();
+
 			productList.add(product);
 		}
-		
+
 		HttpSession session = request.getSession();
 		session.setAttribute("currentPlant1", productList);
 		session.getAttribute("currentUser");

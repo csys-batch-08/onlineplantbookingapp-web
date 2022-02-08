@@ -1,0 +1,55 @@
+@charset "ISO-8859-1";
+body{
+    
+    background-image: url("../images/table.jpg");
+    background-repeat:no repeat;
+    background-size: cover;
+    }
+    
+.one{
+ top :100px;
+ margin-left:600px;
+
+ } 
+ .menu-bar{
+    background:#ace600;
+    text-align: center;
+}
+.menu-bar ul{
+    display:inline-flex;
+    list-style: none;
+    color: #fff;
+}
+.menu-bar ul li
+{
+width: 100px;
+margin: 15px;
+padding: 4px;
+}
+.menu-bar ul li a{
+    text-decoration:none;
+    font-size: 20px;
+}
+.gfg {
+        margin-left:-100px;
+        margin-top: 50px;
+        border: 50px solid #009900;
+        width: 300px;
+        height: 200px;
+        text-align: center;
+        padding: 50px;
+    }
+      
+    .gfg1 {
+        font-size: 42px;
+        font-weight: bold;
+        color: #009900;
+        margin-top: 5px;
+        background-color: #c5c5db;
+    }
+      
+    .gfg2 {
+        font-size: 18px;
+        font-weight: bold;
+        background-color: #c5c5db;
+    }

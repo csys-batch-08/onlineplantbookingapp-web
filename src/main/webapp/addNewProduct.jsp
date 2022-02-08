@@ -5,40 +5,7 @@
 <head>
 <meta charset="ISO-8859-1">
 <title>Insert title here</title>
-<style>
-body{
-    
-    background-image: url("asset/images/table.jpg");
-    background-repeat:no repeat;
-    background-size: cover;
-    }
-    .menu-bar{
-    background:#ace600;
-    text-align: center;
-}
-.menu-bar ul{
-    display:inline-flex;
-    list-style: none;
-    color: #fff;
-}
-.menu-bar ul li
-{
-width: 100px;
-margin: 15px;
-padding: 4px;
-}
-.menu-bar ul li a{
-    text-decoration:none;
-    font-size: 20px;
-}
-.one{
- top :100px;
- margin-left:600px;
-
- } 
-   
-    
-</style>
+<link rel="stylesheet" type="text/css" href="asset\css\addNewProduct.css">
 </head>
 <body>
 <h1 style="text-align: center;">Add New Plant</h1>
@@ -56,13 +23,13 @@ padding: 4px;
 
 <form action="insertProduct" method="post" >
  <div class="one">
-<lable><h3>Enter Plant Name</h3></lable>
+<label><h3>Enter Plant Name</h3></label>
 <input type="text" name="plantname" id="plantname" required><br>
-<lable><h3>Enter plant description</h3></lable>
+<label><h3>Enter plant description</h3></label>
 <input type="text" name="plantdescription" id="plantdescription" required><br>
-<lable><h3>Enter plant price</h3></lable>
+<label><h3>Enter plant price</h3></label>
 <input type="number" name=" plantprice" id="plantprice" min="1" required><br>
-<lable><h3>Enter plant category</h3></lable>
+<label><h3>Enter plant category</h3></label>
 <select name="category" id="category">
 <option value="medicinal">medicinal</option>
 <option value="bamboo" >bamboo</option>

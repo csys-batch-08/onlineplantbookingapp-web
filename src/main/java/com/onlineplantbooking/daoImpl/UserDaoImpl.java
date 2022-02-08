@@ -46,7 +46,6 @@ public class UserDaoImpl {
 
 	}
 
-	
 	public User validateUser(String email, String Password) {
 		String validateQuery = "select USER_ID,USER_NAME,EMAIL_ID,USER_PASSWORD,MOBILE_NUMBER,ADDRESS,ROLE_NAME,WALLET from user_details "
 				+ "where   Email_id= ? and user_password =?";
@@ -62,7 +61,8 @@ public class UserDaoImpl {
 
 			resultSet = preparedStatement.executeQuery();
 			if (resultSet.next()) {
-				user = new User(resultSet.getInt(USERID), resultSet.getString(USERNAME), resultSet.getString(EMAILD), resultSet.getString(USERPASSWORD), resultSet.getLong(MOBILENUMBER),
+				user = new User(resultSet.getInt(USERID), resultSet.getString(USERNAME), resultSet.getString(EMAILD),
+						resultSet.getString(USERPASSWORD), resultSet.getLong(MOBILENUMBER),
 						resultSet.getString(ADDRESS), resultSet.getString(ROLENAME), resultSet.getDouble(WALLET));
 			}
 		} catch (SQLException e) {
@@ -83,12 +83,10 @@ public class UserDaoImpl {
 		PreparedStatement preparedStatement = connection.prepareStatement(updateQuery);
 		preparedStatement.setString(1, update.split(",")[0]);
 		preparedStatement.setString(2, update.split(",")[1]);
-	    preparedStatement.executeUpdate();
+		preparedStatement.executeUpdate();
 		preparedStatement.close();
 		connection.close();
 	}
-
-	
 
 //show all user method 
 
@@ -105,7 +103,8 @@ public class UserDaoImpl {
 			Statement = connection.createStatement();
 			resultSet = Statement.executeQuery(selectQuery);
 			while (resultSet.next()) {
-				userList.add(new User(resultSet.getInt(USERID), resultSet.getString(USERNAME), resultSet.getString(EMAILD), resultSet.getString(USERPASSWORD),
+				userList.add(new User(resultSet.getInt(USERID), resultSet.getString(USERNAME),
+						resultSet.getString(EMAILD), resultSet.getString(USERPASSWORD),
 						Long.parseLong(resultSet.getString(MOBILENUMBER)), resultSet.getString(ADDRESS)));
 
 			}
@@ -160,7 +159,9 @@ public class UserDaoImpl {
 
 			if (resultSet.next()) {
 
-				user = new User(resultSet.getString(USERNAME), resultSet.getString(EMAILD), resultSet.getString(USERPASSWORD), resultSet.getLong(MOBILENUMBER), resultSet.getString(ADDRESS));
+				user = new User(resultSet.getString(USERNAME), resultSet.getString(EMAILD),
+						resultSet.getString(USERPASSWORD), resultSet.getLong(MOBILENUMBER),
+						resultSet.getString(ADDRESS));
 
 			}
 
@@ -218,7 +219,9 @@ public class UserDaoImpl {
 
 			if (resultSet.next()) {
 
-				user = new User(resultSet.getString(USERNAME), resultSet.getString(EMAILD), resultSet.getString(USERPASSWORD), resultSet.getLong(MOBILENUMBER), resultSet.getString(ADDRESS));
+				user = new User(resultSet.getString(USERNAME), resultSet.getString(EMAILD),
+						resultSet.getString(USERPASSWORD), resultSet.getLong(MOBILENUMBER),
+						resultSet.getString(ADDRESS));
 
 			}
 
@@ -275,7 +278,7 @@ public class UserDaoImpl {
 			preparedStatement.setLong(4, user.getMobileNumber());
 			preparedStatement.setString(5, user.getAddress());
 
-			 preparedStatement.executeUpdate();
+			preparedStatement.executeUpdate();
 			preparedStatement.close();
 			connection.close();
 		} catch (SQLException e) {
@@ -298,7 +301,8 @@ public class UserDaoImpl {
 			PreparedStatement.setInt(1, userId);
 			resultSet = PreparedStatement.executeQuery();
 			while (resultSet.next()) {
-				User user = new User(resultSet.getInt(USERID), resultSet.getString(USERNAME), resultSet.getString(EMAILD), resultSet.getString(USERPASSWORD), resultSet.getLong(MOBILENUMBER),
+				User user = new User(resultSet.getInt(USERID), resultSet.getString(USERNAME),
+						resultSet.getString(EMAILD), resultSet.getString(USERPASSWORD), resultSet.getLong(MOBILENUMBER),
 						resultSet.getString(ADDRESS), resultSet.getString(ROLENAME), resultSet.getDouble(WALLET));
 				userList.add(user);
 			}
@@ -323,8 +327,9 @@ public class UserDaoImpl {
 			PreparedStatement.setInt(1, userId);
 			rs = PreparedStatement.executeQuery();
 			while (rs.next()) {
-				User user = new User(rs.getInt(USERID), rs.getString(USERNAME), rs.getString(EMAILD), rs.getString(USERPASSWORD), rs.getLong(MOBILENUMBER),
-						rs.getString(ADDRESS), rs.getString(ROLENAME), rs.getDouble(WALLET));
+				User user = new User(rs.getInt(USERID), rs.getString(USERNAME), rs.getString(EMAILD),
+						rs.getString(USERPASSWORD), rs.getLong(MOBILENUMBER), rs.getString(ADDRESS),
+						rs.getString(ROLENAME), rs.getDouble(WALLET));
 				userList.add(user);
 			}
 		} catch (SQLException e) {

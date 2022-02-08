@@ -35,11 +35,11 @@ public class OrdersDaoImpl {
 
 //insert order	
 	public User insertOrder(Orders order) throws SQLException {
-		ProductDaoImpl proDao = new ProductDaoImpl();
+		ProductDaoImpl proDaoImpl = new ProductDaoImpl();
 		UserDaoImpl userDaoImpl = new UserDaoImpl();
 		int userId = userDaoImpl.findUserId(order.getUser());
 		Statement statement = null;
-		List<Product> plant_List = proDao.findProductId(order.getProduct());
+		List<Product> plant_List = proDaoImpl.findProductId(order.getProduct());
 		int plant_id=0;
 		for(int i=0;i<plant_List.size();i++) {
 			plant_id=plant_List.get(i).getPlantId();
@@ -92,27 +92,47 @@ public class OrdersDaoImpl {
 
 //admin  update product
 
-	public void update(int quantity, int order_id) throws SQLException {
+	public void update(int quantity, int order_id)  {
 		String updateQuery = "update plant_orders set quantity =? where order_id= ?";
 		Connection connection = ConnectionUtil.getDbConnection();
-		PreparedStatement pstPreparedStatement = connection.prepareStatement(updateQuery);
-		pstPreparedStatement.setInt(1, quantity);
-		pstPreparedStatement.setInt(2, order_id);
-		pstPreparedStatement.close();
-		connection.close();
+		PreparedStatement pstPreparedStatement = null;
+		try {
+			pstPreparedStatement = connection.prepareStatement(updateQuery);
+			pstPreparedStatement.setInt(1, quantity);
+			pstPreparedStatement.setInt(2, order_id);
+		} catch (SQLException e) {
+			
+			e.printStackTrace();
+		}
+		finally {
+			ConnectionUtil.closePreparedStatement(pstPreparedStatement, connection);
+			
+		}
+		
 
 	}
 
 //delete product
 	
-	public void delete(int orderId) throws SQLException {
+	public void delete(int orderId)  {
 		String deleteQuery = "delete from plant_orders where order_id=?";
 		Connection connection = ConnectionUtil.getDbConnection();
-		PreparedStatement pstmPreparedStatement = connection.prepareStatement(deleteQuery);
-		pstmPreparedStatement.setInt(1, orderId);
-	    pstmPreparedStatement.executeUpdate();
-		pstmPreparedStatement.close();
-		connection.close();
+		PreparedStatement pstmPreparedStatement =null;
+		try {
+			pstmPreparedStatement = connection.prepareStatement(deleteQuery);
+			pstmPreparedStatement.setInt(1, orderId);
+			pstmPreparedStatement.executeUpdate();
+		} catch (SQLException e) {
+			
+			e.printStackTrace();
+		}
+		finally {
+			ConnectionUtil.closePreparedStatement(pstmPreparedStatement, connection);
+			
+		}
+		
+	   
+		
 
 	}
 // user show order
@@ -127,10 +147,9 @@ public class OrdersDaoImpl {
 			preparedStatement.setInt(1, user.getUserId());
 			 resultSet = preparedStatement.executeQuery();
 			while (resultSet.next()) {
-				ProductDaoImpl productDao = new ProductDaoImpl();
-				Product product = productDao.findProduct(resultSet.getInt(PLANTID));
+				ProductDaoImpl produDaoImpl = new ProductDaoImpl();
+				Product product = produDaoImpl.findProduct(resultSet.getInt(PLANTID));
 				Date dates=resultSet.getTimestamp(ORDERATE);
-				
 				Orders order = new Orders(product,user, resultSet.getInt(QUANTITY), resultSet.getInt(TOTALPRICE), resultSet.getString(ADDRESS),dates);
 				orderList.add(order);
 			}
@@ -153,17 +172,17 @@ public class OrdersDaoImpl {
 		Connection connection = ConnectionUtil.getDbConnection();
 	    String query="update order_details set ORDER_STATUS='cancel' where orders_id=?";
 	    boolean flag=false;
-	    PreparedStatement psPreparedStatement =null;
+	    PreparedStatement PreparedStatement =null;
 	    try {
-			psPreparedStatement = connection.prepareStatement(query);
-			psPreparedStatement.setInt(1, orderid);
-			flag=psPreparedStatement.executeUpdate()>0;
+			PreparedStatement = connection.prepareStatement(query);
+			PreparedStatement.setInt(1, orderid);
+			flag=PreparedStatement.executeUpdate()>0;
 			} catch (SQLException e) {
 		
 			e.printStackTrace();
 		}
 	    finally {
-	    	ConnectionUtil.closePreparedStatement(psPreparedStatement, connection);
+	    	ConnectionUtil.closePreparedStatement(PreparedStatement, connection);
 	    }
 		return flag;
 		
@@ -171,13 +190,13 @@ public class OrdersDaoImpl {
 	public String orderStatus(int orderid)
 	{   Connection connection = ConnectionUtil.getDbConnection();
 	    String query="select order_status from order_details  where orders_id=?";
-	    PreparedStatement psPreparedStatement =null;
+	    PreparedStatement PreparedStatement =null;
 	    String status=null;
 	    try {
-			psPreparedStatement = connection.prepareStatement(query);
+			PreparedStatement = connection.prepareStatement(query);
 		
-			psPreparedStatement.setInt(1, orderid);
-			ResultSet rs=psPreparedStatement.executeQuery();
+			PreparedStatement.setInt(1, orderid);
+			ResultSet rs=PreparedStatement.executeQuery();
 			if(rs.next()) {
 				status=rs.getString(1);
 			}
@@ -187,7 +206,7 @@ public class OrdersDaoImpl {
 			e.printStackTrace();
 		}
 	    finally {
-	    	ConnectionUtil.closePreparedStatement(psPreparedStatement, connection);
+	    	ConnectionUtil.closePreparedStatement(PreparedStatement, connection);
 	    }
 		return status;
 		
@@ -203,10 +222,9 @@ public class OrdersDaoImpl {
 			 statement = connection.createStatement();
 			 resultSet = statement.executeQuery(query);
 			while (resultSet.next()) {
-				ProductDaoImpl productDao = new ProductDaoImpl();
-				Product product = productDao.findProduct(resultSet.getInt(PLANTID));
+				ProductDaoImpl producDaoImpl = new ProductDaoImpl();
+				Product product = producDaoImpl.findProduct(resultSet.getInt(PLANTID));
 				Date dates=resultSet.getTimestamp(ORDERATE);
-				
 				Orders order = new Orders(resultSet.getInt(ORDERSID),product, user, resultSet.getInt(QUANTITY), resultSet.getInt(TOTALPRICE), resultSet.getString(ADDRESS),dates);
 				orderList.add(order);
 			}
@@ -232,10 +250,10 @@ public class OrdersDaoImpl {
 		try {
 			 statement = connection.createStatement();
 			 resultSet = statement.executeQuery(Query);
-			while(resultSet.next()) {
+			 while(resultSet.next()) {
 			 
-			ProductDaoImpl productDao = new ProductDaoImpl();
-			Product pro = productDao.findProduct(resultSet.getInt(PLANTID));
+			ProductDaoImpl producDaoImpl = new ProductDaoImpl();
+			Product pro = producDaoImpl.findProduct(resultSet.getInt(PLANTID));
 			Date dates=resultSet.getTimestamp(ORDERATE);
 			Orders order=new Orders(resultSet.getInt(ORDERSID),pro,user,resultSet.getInt(QUANTITY),resultSet.getInt(TOTALPRICE),resultSet.getString(ADDRESS),dates,resultSet.getString(ORDERSTATUS));
 			orderList.add(order);

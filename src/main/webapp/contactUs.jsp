@@ -5,16 +5,8 @@
 <head>
 <meta charset="ISO-8859-1">
 <title>Insert title here</title>
+<link rel="stylesheet" type="text/css" href="asset\css\contactUs.css">
 
-<style>
-body{
-    
-    background-image: url("asset/images/about.jpg");
-    background-repeat:no repeat;
-    background-size: cover;
-    }
-    
- </style>
  </head>
 <body>
 <h1 style="text-align: center;">Contact Us</h1>

@@ -21,7 +21,7 @@ public class ShowUserServlet extends HttpServlet {
 
 	public ShowUserServlet() {
 		super();
-		// TODO Auto-generated constructor stub
+		
 	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)

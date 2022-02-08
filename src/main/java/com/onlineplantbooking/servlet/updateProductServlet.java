@@ -1,7 +1,6 @@
 package com.onlineplantbooking.servlet;
 
 import java.io.IOException;
-import java.sql.SQLException;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -23,20 +22,12 @@ public class updateProductServlet extends HttpServlet {
 
 		int plantId = Integer.parseInt(request.getParameter("plantId"));
 		int plantPrice = Integer.parseInt(request.getParameter("plantPrice"));
-		int i=0;
-
-		try {
-			i = productDao.updateProduct(plantId, plantPrice);
-		} catch (ClassNotFoundException e) {
-
-			e.printStackTrace();
-		} catch (SQLException e) {
-
-			e.printStackTrace();
-		}
-
-				response.sendRedirect("admin.jsp");		
 		
+
+		 productDao.updateProduct(plantId, plantPrice);
+
+		response.sendRedirect("admin.jsp");
+
 	}
 
 }

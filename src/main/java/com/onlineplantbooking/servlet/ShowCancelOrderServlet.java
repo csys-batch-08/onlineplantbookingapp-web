@@ -27,8 +27,6 @@ public class ShowCancelOrderServlet extends HttpServlet {
 		OrdersDaoImpl orderDao = new OrdersDaoImpl();
 		List<Orders> orderList = orderDao.ShowOrders(user);
 		session.setAttribute("order", orderList);
-		//response.sendRedirect("orderCancel.jsp");
-		//response.getWriter().append("Served at: ").append(request.getContextPath());
 		RequestDispatcher dispatcher = request.getRequestDispatcher("orderCancel.jsp");
 		dispatcher.forward(request, response);
 	}

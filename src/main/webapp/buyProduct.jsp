@@ -1,4 +1,3 @@
-
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
  <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
@@ -8,58 +7,7 @@
 <head>
 <meta charset="ISO-8859-1">
 <title>List of products</title>
-
-
-<style>
-body{
-    background-color: pink;
-    background-repeat:no repeat;
-    background-size: cover;
-    }
-a{
-text-decoration: none;
-}
-table,th,td{
-border:5px solid black;
-border-collapse:collapse;
-}
-
-table {
-  width: 100%;
-}
-
-td {
-  height: 50px;
-  font-size: 20px;
-}
-
-.menu-bar{
-    background:#ace600;
-    text-align: center;
-}
-.menu-bar ul{
-    display:inline-flex;
-    list-style: none;
-    color: #fff;
-}
-.menu-bar ul li
-{
-width: 100px;
-margin: 15px;
-padding: 4px;
-}
-.menu-bar ul li a input{
-    text-decoration:none;
-    font-size: 20px;
-}
-#searchbar {
-	position: relative;
-	top: 0px;
-	left: 1050px;
-}
-
-
-</style>
+<link rel="stylesheet" type="text/css" href="asset\css\buyProduct.css">
 </head>
 <body>
 <form action="SearchProductServlet" >
@@ -104,9 +52,9 @@ padding: 4px;
 
 
 	  
-	  <c:forEach items="${ShowProduct}" var="product">
+	  <c:forEach items="${ShowProduct}" var="product"> 
 	  <tr>
-	  <td><img alt="#alter" src="asset/images/${product.image}" width="200" height="200"></td>
+	   <td><img alt="#alter" src="asset/images/${product.image}" width="200" height="200"></td>
 	  <td>${product.plantName}</td>
 	  <td>${product.plantDescription}</td>
 	  <td>${product.categoryName}</td>
@@ -114,8 +62,12 @@ padding: 4px;
 	  <td><a href="BuyPlantServlet?plantName=${product.plantName}&catName=${product.categoryName}">Buy</a>
 	  <td><a href="CartInsertServlet?plantId=${product.plantId}&plantName=${product.plantName }&plantPrice=${product.plantPrice }">cart</a>
 	  </td>
-	  </tr>
-	  </c:forEach>
+	  
+	   </tr>
+	   </c:forEach>
+	   
+	 
+	 
 	  </table>
 	   </body>
 	  </html>

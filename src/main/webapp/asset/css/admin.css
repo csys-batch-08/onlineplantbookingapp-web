@@ -1,0 +1,36 @@
+@charset "ISO-8859-1";
+body{
+    
+    background-image: url("../images/table.jpg");
+    background-repeat:no repeat;
+    background-size: cover;
+    }
+a{
+text-decoration: none;
+}    
+    
+.one{
+ top :100px;
+ margin-left:500px;
+
+ }    
+.menu-bar{
+    background:#ace600;
+    text-align: center;
+}
+.menu-bar ul{
+    display:inline-flex;
+    list-style: none;
+    color: #fff;
+}
+.menu-bar ul li
+{
+width: 100px;
+margin: 15px;
+padding: 4px;
+}
+.menu-bar ul li a{
+    text-decoration:none;
+    font-size: 20px;
+}
+    

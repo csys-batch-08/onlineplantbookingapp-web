@@ -37,7 +37,7 @@ public class LoginServlet extends HttpServlet {
 		if (role.equals("user")) {
 			session1.setAttribute("currentUser", user);
 			ProductDaoImpl productDao = new ProductDaoImpl();
-			List<Orders> order= productDao.offerPlant();
+			List<Orders> order = productDao.offerPlant();
 			session.setAttribute("plantOffer", order);
 			RequestDispatcher req = request.getRequestDispatcher("ShowProductServlet");
 			req.forward(request, response);

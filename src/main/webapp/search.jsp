@@ -12,51 +12,7 @@
 <head>
 <meta charset="ISO-8859-1">
 <title>List of products</title>
-
-
-<style>
-body {
-	background-color: pink;
-	background-repeat: no repeat;
-	background-size: cover;
-}
-
-table, th, td {
-	border: 5px solid black;
-	border-collapse: collapse;
-}
-
-table {
-	width: 100%;
-}
-
-td {
-	height: 50px;
-	font-size: 20px;
-}
-
-.menu-bar {
-	background: #ace600;
-	text-align: center;
-}
-
-.menu-bar ul {
-	display: inline-flex;
-	list-style: none;
-	color: #fff;
-}
-
-.menu-bar ul li {
-	width: 100px;
-	margin: 15px;
-	padding: 4px;
-}
-
-.menu-bar ul li a {
-	text-decoration: none;
-	font-size: 20px;
-}
-</style>
+<link rel="stylesheet" type="text/css" href="asset\css\search.css">
 </head>
 <body>
 
@@ -87,7 +43,7 @@ td {
  <c:forEach items="${list}" var="search">	
 		
 <tr>
-
+ <td><img alt="#alter" src="asset/images/${search.image}" width="200" height="200"></td>
 <td>${search.plantName}</td>
 <td>${search.plantDescription}</td>
 <td>${search.categoryName}</td>

@@ -1,59 +1,15 @@
-<%@page import="com.onlineplantbooking.model.Orders"%>
-<%@page import="com.onlineplantbooking.model.User"%>
-<%@page import="java.util.List"%>
-<%@page import="com.onlineplantbooking.daoImpl.OrdersDaoImpl"%>
+
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>    
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%> 
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>      
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="ISO-8859-1">
 <title>orderCancel</title>
+<link rel="stylesheet" type="text/css" href="asset\css\orderCancel.css">
 
-
-<style>
-table,tr,th, td {
-  border: 5px solid black;
-  border-collapse: collapse;
-}
-body{
-    
-    background-image: url("asset/images/table.jpg");
-    background-repeat:no repeat;
-    background-size: cover;
-    }
-td{
-font-size:150%
-} 
-
-.one{
- top :100px;
- margin-left:300px;
- } 
- .menu-bar{
-    background:#ace600;
-    text-align: center;
-}
-.menu-bar ul{
-    display:inline-flex;
-    list-style: none;
-    color: #fff;
-}
-.menu-bar ul li
-{
-width: 100px;
-margin: 15px;
-padding: 4px;
-}
-.menu-bar ul li a{
-    text-decoration:none;
-    font-size: 20px;
-}
- 
- 
- 
-</style>
 </head>
 <body>
 
@@ -106,7 +62,9 @@ padding: 4px;
 <td>${orderList.product.plantName}</td>
 <td>${orderList.quantity }</td>
 <td>${orderList.totalPrice }</td>
-<td>${orderList.orderDate }</td>
+<fmt:parseDate value="${orderList.orderDate}" pattern="yyyy-MM-dd HH:mm" var="orderDate" type="date" />
+<td><fmt:formatDate pattern="dd-MM-yyyy HH:mm" value="${orderDate}" />	
+
 <td><a href="ordercancelserv?orderid=${orderList.orderid }&price=${orderList.totalPrice }">cancel</a></td>
 </tr>
 </c:forEach>

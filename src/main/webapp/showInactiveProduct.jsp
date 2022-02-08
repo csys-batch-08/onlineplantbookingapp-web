@@ -6,27 +6,7 @@
 <head>
 <meta charset="ISO-8859-1">
 <title>showInactivePlant</title>
-<style>
-
-table, tr, td,th {
-  border: 5px solid black;
-  border-collapse: collapse;
-}
-body{
-       
-    background-color:pink;
-    background-repeat:no repeat;
-    background-size: cover;
-    }
-td{
- font-size: 20px;
-}    
-.searchbar {
-	position: relative;
-	top: 0px;
-	left: 1050px;
-}
-</style>
+<link rel="stylesheet" type="text/css" href="asset\css\ShowInactiveProduct.css">
 </head>
 <body>
 <h1 style="text-align: center;"> Show Plant</h1>
@@ -50,7 +30,7 @@ td{
 	  	  
 	  <c:forEach items="${plantinactiveList}" var="Showproduct">	  
 	  <tr>
-	  <td><img alt="#alter" src="images1/${Showproduct.image }" width="200" height="200"></td>
+	 <td><img alt="#alter" src="asset/images/${Showproduct.image }" width="200" height="200"></td>
 	  <td>${Showproduct.plantName}</td>
 	  <td>${Showproduct.plantDescription}</td>
 	  <td>${Showproduct.categoryName}</td>

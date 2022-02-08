@@ -6,17 +6,9 @@
 <head>
 <meta charset="ISO-8859-1">
 <title>Insert title here</title>
-<style>
-body{
-    
-    background-image:url("asset/images/table.jpg");
-    background-repeat:no repeat;
-    background-size: cover;
-    }
-</style>
+<link rel="stylesheet" type="text/css" href="asset\css\insertCart.css">
 </head>
-
-
+<h1 style="text-align: center;"> Add To Cart</h1>
 <body>
 <c:set var="plantName"  scope="session" value="${plantname}"/>
 <c:set var="plantPrice" scope="session" value="${plantprice}"/>
@@ -28,7 +20,5 @@ body{
 <h2><b>Plant Price</b></h2><input type="text" value="${plantPrice}" name="Price"><br><br>
 <button type="submit"><b>submit</b></button><br><br>
 </form>
-
-
 </body>
 </html>

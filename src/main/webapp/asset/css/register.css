@@ -52,4 +52,12 @@
   border: 0;
   border-radius: none;
   background-color:#e2cfc9;
-}
+  }
+  
+ body{
+    
+    background-image: url("../images/table.jpg");
+    background-repeat:no repeat;
+    background-size: cover;
+    } 
+  

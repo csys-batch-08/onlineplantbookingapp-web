@@ -22,10 +22,8 @@ public class InserCartServlet extends HttpServlet {
 
 		response.getWriter().append("Served at: ").append(request.getContextPath());
 		HttpSession session = request.getSession();
-
 		int plantId = Integer.parseInt(request.getParameter("plantId"));
 		int userId = (int) session.getAttribute("userId");
-
 		Cart cart = new Cart(userId, plantId);
 		CartDaoImpl cartDao = new CartDaoImpl();
 		cartDao.insertCart(cart);
@@ -36,7 +34,6 @@ public class InserCartServlet extends HttpServlet {
 			throws ServletException, IOException {
 		HttpSession session = request.getSession();
 		int plantId = Integer.parseInt(request.getParameter("plantId"));
-		// String plantName= request.getParameter("plantname");
 		int userId = (int) session.getAttribute("userId");
 		Cart cart = new Cart(userId, plantId);
 		CartDaoImpl cartDao = new CartDaoImpl();
