@@ -23,8 +23,7 @@ public class AdminUpdateProServlet extends HttpServlet {
 			throws ServletException, IOException {
 		ProductDaoImpl productDao = new ProductDaoImpl();
 		List<Product> productList = productDao.showProduct();
-		HttpSession session = request.getSession();
-		session.setAttribute("product", productList);
+		request.setAttribute("product", productList);
 		RequestDispatcher req = request.getRequestDispatcher("showProduct.jsp");
 		req.forward(request, response);
 

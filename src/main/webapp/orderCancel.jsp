@@ -4,7 +4,7 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%> 
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>      
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 <meta charset="ISO-8859-1">
 <title>orderCancel</title>
@@ -47,15 +47,14 @@
 <div class="one"> 
 <table>
 <tr>
-<td><b>User Name</b></td>
-<td><b>Product Name</b></td>
-<td><b>Quantity</b></td>
-<td><b>Price</b></td>
-<td><b>Order Date</b></td>
-<td><b>cancel</b>
+<td><strong>User Name</strong></td>
+<td><strong>Product Name</strong></td>
+<td><strong>Quantity</strong></td>
+<td><strong>Price</strong></td>
+<td><strong>Order Date</strong></td>
+<td><strong>cancel</strong></td>
+
 </tr>
-
-
 <c:forEach items="${order}" var="orderList">
 <tr>
 <td>${orderList.user.name }</td>

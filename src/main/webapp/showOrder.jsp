@@ -4,7 +4,7 @@
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>    
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>    
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 <meta charset="ISO-8859-1">
 <title>plant Booking</title>
@@ -26,15 +26,15 @@
 <h1 style="text-align: left;"> Show Order</h1>
 <table>
 <tr>
-<td><b>User Name</b></td>
-<td><b>Product Name</b></td>
-<td><b>Quantity</b></td>
-<td><b>Price</b></td>
-<td><b>Order Date</b></td>
+<td><strong>User Name</strong></td>
+<td><strong>Product Name</strong></td>
+<td><strong>Quantity</strong></td>
+<td><strong>Price</strong></td>
+<td><strong>Order Date</strong></td>
 </tr>
 
 
-<c:forEach items="${showOrder}" var="order">
+<c:forEach items="${showOrder}"  var="order">
 <tr>
 <td>${order.user.name}</td>
 <td>${order.product.plantName}</td>
@@ -42,15 +42,15 @@
 <td>${order.totalPrice }</td>
 <fmt:parseDate value="${order.orderDate}" pattern="yyyy-MM-dd HH:mm" var="orderDate" type="date" />
 <td><fmt:formatDate pattern="dd-MM-yyyy HH:mm" value="${orderDate}" />								
-								
-
+</td>								
+</tr>
 </c:forEach>
 </table>
 <br><br>
 </div>
 
 <c:set var="wallet" scope="session" value="${User}"/>
-<center><strong><h2>Wallet Balane:</h2></strong>${wallet }</center>
+<h3>Wallet Balane:${wallet }</h3>
 
 </body>
 </html>

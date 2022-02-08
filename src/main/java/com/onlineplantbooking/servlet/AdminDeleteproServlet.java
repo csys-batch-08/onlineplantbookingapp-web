@@ -9,7 +9,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
+
 
 import com.onlineplantbooking.daoImpl.ProductDaoImpl;
 import com.onlineplantbooking.model.Product;
@@ -22,8 +22,7 @@ public class AdminDeleteproServlet extends HttpServlet {
 			throws ServletException, IOException {
 		ProductDaoImpl productDao = new ProductDaoImpl();
 		List<Product> productList = productDao.showProduct();
-		HttpSession session = request.getSession();
-		session.setAttribute("product", productList);
+		request.setAttribute("product", productList);
 		RequestDispatcher dispatcher = request.getRequestDispatcher("deleteProduct.jsp");
 		dispatcher.forward(request, response);
 

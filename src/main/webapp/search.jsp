@@ -8,7 +8,7 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>	
 	
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 <meta charset="ISO-8859-1">
 <title>List of products</title>
@@ -29,15 +29,16 @@
 
     <h1 style="text-align: center;"> Show Plant</h1> 
   
-	<table align="center">
+	<table class="center">
 		<tr>
 			
-			<td><b>Plant Name</b></td>
-			<td><b>Plant Description</b></td>
-			<td><b>category Name</b></td>
-			<td><b>Plant Price</b></td>
-			<td><b>Buy Now</b></td>
-			<td><b>Add To Cart</b></td>
+			<td><strong>Plant Name</strong></td>
+			<td><strong>Plant Description</strong></td>
+			<td><strong>category Name</strong></td>
+			<td><strong>Plant Price</strong></td>
+			<td><strong>Buy Now</strong></td>
+			
+			<td><strong>Add To Cart</strong></td>
 		</tr> 
 		
  <c:forEach items="${list}" var="search">	
@@ -58,3 +59,4 @@
 </body>
 </html>
 
+			

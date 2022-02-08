@@ -32,13 +32,14 @@ public class LoginServlet extends HttpServlet {
 		User user = userDao.validateUser(emailId, password);
 		String role = user.getRole();
 
-		HttpSession session1 = request.getSession();
+		
 		session.setAttribute("userId", user.getUserId());
+		
 		if (role.equals("user")) {
-			session1.setAttribute("currentUser", user);
+			session.setAttribute("currentUser", user);
 			ProductDaoImpl productDao = new ProductDaoImpl();
 			List<Orders> order = productDao.offerPlant();
-			session.setAttribute("plantOffer", order);
+			request.setAttribute("plantOffer", order);
 			RequestDispatcher req = request.getRequestDispatcher("ShowProductServlet");
 			req.forward(request, response);
 

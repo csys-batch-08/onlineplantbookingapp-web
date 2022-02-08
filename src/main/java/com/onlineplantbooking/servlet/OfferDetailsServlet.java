@@ -38,7 +38,7 @@ public class OfferDetailsServlet extends HttpServlet {
 		List<Product> productList = new ArrayList<Product>();
 		productList.add(product);
 		HttpSession session = request.getSession();
-		session.setAttribute("productOffer", productList);
+		request.setAttribute("productOffer", productList);
 		session.setAttribute("currentPlant1", product);
 		RequestDispatcher requestDispatcher = request.getRequestDispatcher("offerDetails.jsp");
 		requestDispatcher.forward(request, response);

@@ -4,7 +4,7 @@
     
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>    
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 <meta charset="ISO-8859-1">
 <title>Insert title here</title>
@@ -41,7 +41,7 @@
 <b>Address:</b><input type="text"  name="addresss"   id="address" required><br><br>
 <b>Total Price:</b><input type="number"  name="total"   id="price"><br><br>
 <br>
-<button type="submit" id="submit"> Submit</button>
+<button type="submit" id="submit">Submit</button>
 <input type="reset">
 
 </form>

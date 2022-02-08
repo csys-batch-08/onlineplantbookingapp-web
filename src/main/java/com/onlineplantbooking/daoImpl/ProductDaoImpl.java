@@ -54,6 +54,31 @@ public class ProductDaoImpl {
 		return productList;
 
 	}
+	
+	
+	//insert product
+		public void insertProduct(Product product) {
+			String insertQuery = "insert into product_details(plant_name,plant_description,plant_price,category_name,picture)"
+					+ " values(?,?,?,?,?)";
+			Connection connection = ConnectionUtil.getDbConnection();
+			PreparedStatement pstPreparedStatement = null;
+			try {
+				pstPreparedStatement = connection.prepareStatement(insertQuery);
+				pstPreparedStatement.setString(1, product.getPlantName());
+				pstPreparedStatement.setString(2, product.getPlantDescription());
+				pstPreparedStatement.setInt(3, product.getPlantPrice());
+				pstPreparedStatement.setString(4, product.getCategoryName());
+				pstPreparedStatement.setString(5, product.getImage());
+				pstPreparedStatement.executeUpdate();
+
+			} catch (SQLException e) {
+
+				e.printStackTrace();
+			} finally {
+				ConnectionUtil.closePreparedStatement(pstPreparedStatement, connection);
+			}
+
+		}
 
 	public List<Product> showInactiveProduct() {
 		List<Product> productList = new ArrayList<Product>();
@@ -92,6 +117,7 @@ public class ProductDaoImpl {
 		try {
 			preparedStatement = connection.prepareStatement(Query);
 			preparedStatement.setString(1, product.getPlantName());
+			
 			preparedStatement.setString(2, product.getCategoryName());
 			resultSet = preparedStatement.executeQuery();
 			while (resultSet.next()) {
@@ -211,28 +237,7 @@ public class ProductDaoImpl {
 
 	}
 
-//insert product
-	public void insertProduct(Product product) {
-		String insertQuery = "insert into product_details(plant_name,plant_description,plant_price,category_name,picture) values(?,?,?,?,?)";
-		Connection connection = ConnectionUtil.getDbConnection();
-		PreparedStatement pstPreparedStatement = null;
-		try {
-			pstPreparedStatement = connection.prepareStatement(insertQuery);
-			pstPreparedStatement.setString(1, product.getPlantName());
-			pstPreparedStatement.setString(2, product.getPlantDescription());
-			pstPreparedStatement.setInt(3, product.getPlantPrice());
-			pstPreparedStatement.setString(4, product.getCategoryName());
-			pstPreparedStatement.setString(5, product.getImage());
-			pstPreparedStatement.executeUpdate();
 
-		} catch (SQLException e) {
-
-			e.printStackTrace();
-		} finally {
-			ConnectionUtil.closePreparedStatement(pstPreparedStatement, connection);
-		}
-
-	}
 
 	public List<Product> filterPlant(String search) {
 		List<Product> plantList = new ArrayList<Product>();

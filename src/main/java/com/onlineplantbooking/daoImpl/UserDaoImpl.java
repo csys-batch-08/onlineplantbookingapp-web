@@ -76,16 +76,27 @@ public class UserDaoImpl {
 		return user;
 	}
 
-	public void update(String update) throws SQLException {
+	public void update(String update)  {
 
 		String updateQuery = "update user_details set user_password=? where email_id=?";
 		Connection connection = ConnectionUtil.getDbConnection();
-		PreparedStatement preparedStatement = connection.prepareStatement(updateQuery);
-		preparedStatement.setString(1, update.split(",")[0]);
-		preparedStatement.setString(2, update.split(",")[1]);
-		preparedStatement.executeUpdate();
-		preparedStatement.close();
-		connection.close();
+		PreparedStatement preparedStatement =null;
+		try {
+			 preparedStatement = connection.prepareStatement(updateQuery);
+			preparedStatement.setString(1, update.split(",")[0]);
+			preparedStatement.setString(2, update.split(",")[1]);
+			preparedStatement.executeUpdate();
+			
+		} catch (SQLException e) {
+			
+			e.printStackTrace();
+		}
+		finally {
+			ConnectionUtil.closePreparedStatement(preparedStatement, connection);
+		}
+		
+		
+		
 	}
 
 //show all user method 
@@ -134,6 +145,7 @@ public class UserDaoImpl {
 
 				userId = resultSet.getInt(1);
 			}
+			return userId;
 
 		} catch (SQLException e) {
 
@@ -176,35 +188,32 @@ public class UserDaoImpl {
 	}
 
 //wallet
-	public int walletbalance(int id) throws SQLException {
+	public int walletbalance(int id)  {
 		Connection connection = ConnectionUtil.getDbConnection();
 		String query = "select wallet from user_details where user_id=? ";
-		PreparedStatement pstmPreparedStatement = connection.prepareStatement(query);
-		pstmPreparedStatement.setInt(1, id);
-		ResultSet resultSet = pstmPreparedStatement.executeQuery();
-		while (resultSet.next()) {
-			return resultSet.getInt(1);
+		PreparedStatement PreparedStatement =null;
+		ResultSet resultSet =null;
+		try {
+			PreparedStatement = connection.prepareStatement(query);
+			PreparedStatement.setInt(1, id);
+			resultSet = PreparedStatement.executeQuery();
+			while (resultSet.next()) {
+				return resultSet.getInt(1);
+			}
+			
+			
+		} catch (SQLException e) {
+			
+			e.printStackTrace();
+		}finally {
+			ConnectionUtil.closePreparedStatement(PreparedStatement, connection, resultSet);
 		}
-		pstmPreparedStatement.close();
-		resultSet.close();
-		connection.close();
+		
+		
 		return -1;
 	}
 
-//update wallet
-	public int updateWallet(int amount, int userId) throws SQLException {
-		Connection connection = ConnectionUtil.getDbConnection();
-		String query = "update user_details set wallet=? where userId=?";
-		PreparedStatement pstmtPreparedStatement = connection.prepareStatement(query);
-		pstmtPreparedStatement.setInt(1, amount);
-		pstmtPreparedStatement.setInt(2, userId);
-		int rs = pstmtPreparedStatement.executeUpdate();
-		pstmtPreparedStatement.executeUpdate("commit");
-		connection.close();
-		pstmtPreparedStatement.close();
-		return rs;
 
-	}
 
 	public User findUser(String email) {
 		String findUserID = "select USER_NAME,EMAIL_ID,USER_PASSWORD,MOBILE_NUMBER,ADDRESS from user_details where emailId='"

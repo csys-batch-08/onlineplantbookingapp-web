@@ -34,7 +34,7 @@ public class ViewUserCartServlet extends HttpServlet {
 		HttpSession session=request.getSession();
 		int userId=(int)session.getAttribute("userId");
  		List<Product> productList=cartDao.fetchCart(userId);
-		session.setAttribute("plantList", productList);
+ 		session.setAttribute("plantList", productList);
 		
 		RequestDispatcher req=request.getRequestDispatcher("userCart.jsp");
 		 req.forward(request, response);

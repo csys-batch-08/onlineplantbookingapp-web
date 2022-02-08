@@ -3,7 +3,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 <meta charset="ISO-8859-1">
 <title>offer  </title>
@@ -26,11 +26,11 @@
 <h2 style="text-align: center;">OFFER</h2>
 <table>
 <tr>
-<td><b>PLANT</b></td>
-<td><b>PLANT NAME</b></td>
-<td><b>PLANT DESCRIPTION</b></td>
-<td><b>CATEGORY NAME</b></td>
-<td><b>PLANT PRICE</b></td>
+<td><strong>PLANT</strong></td>
+<td><strong>PLANT NAME</strong></td>
+<td><strong>PLANT DESCRIPTION</strong></td>
+<td><strong>CATEGORY NAME</strong></td>
+<td><strong>PLANT PRICE</strong></td>
 <td><b>BUY</b></td>
 
 </tr>

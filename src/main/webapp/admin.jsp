@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 <meta charset="ISO-8859-1">
 <title> Admin Page</title>
@@ -26,11 +26,11 @@
 <div class="one">
 <h1>WELCOME ADMIN</h1>
 
-<a href="ShowUserServlet"><h3>Show all User</h3></a>
-<a href="AdminUpdateProServlet"><h3>Show all product</h3></a>
-<a href="AdminDeleteproServlet"><h3>Delete  product</h3></a>
-<a href="showInactive"><h3>Show Inactive Plant</h3></a>
-<a href="addNewProduct.jsp"><h3>Add New Product</h3></a>
+<a href="ShowUserServlet">Show all User</a>
+<a href="AdminUpdateProServlet">Show all product</a>
+<a href="AdminDeleteproServlet">Delete  product</a>
+<a href="showInactive">Show Inactive Plant</a>
+<a href="addNewProduct.jsp">Add New Product</a>
 <form action="DeleteProductServlet" >
 </form>
 </div>

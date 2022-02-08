@@ -36,26 +36,31 @@ public class OrdersDaoImpl {
 //insert order	
 	public User insertOrder(Orders order) throws SQLException {
 		ProductDaoImpl proDaoImpl = new ProductDaoImpl();
+		
 		UserDaoImpl userDaoImpl = new UserDaoImpl();
 		int userId = userDaoImpl.findUserId(order.getUser());
-		Statement statement = null;
+		System.out.println(order);
+		System.out.println(order.getProduct());
 		List<Product> plant_List = proDaoImpl.findProductId(order.getProduct());
+		
+		Statement statement = null;
 		int plant_id=0;
 		for(int i=0;i<plant_List.size();i++) {
 			plant_id=plant_List.get(i).getPlantId();
 		}
 
 		Connection connection = ConnectionUtil.getDbConnection();
-		String query2 = "select user_id,user_name,email_id,user_password,mobile_number,address,role_name,wallet from user_details where user_id='" + userId + "'";
+		String query2 = "select user_id,user_name,email_id,user_password,mobile_number,address,role_name,wallet "
+				+ "from user_details where user_id='" + userId + "'";
 		statement = connection.createStatement();
-		ResultSet rs1 = statement.executeQuery(query2);
+		ResultSet resultSet = statement.executeQuery(query2);
 		double wallet = 0;
 		
 
 		User user=null;
-		if (rs1.next()) {
-			wallet = rs1.getDouble(8);
-			 user=new User(rs1.getInt(USERID),rs1.getString(USERNAME),rs1.getString(EMAILD),rs1.getString(USERPASSWORD),rs1.getLong(MOBILENUMBER),rs1.getString(ADDRESS),rs1.getString(ROLENAME),rs1.getDouble(WALLET));
+		if (resultSet.next()) {
+			wallet = resultSet.getDouble(8);
+			 user=new User(resultSet.getInt(USERID),resultSet.getString(USERNAME),resultSet.getString(EMAILD),resultSet.getString(USERPASSWORD),resultSet.getLong(MOBILENUMBER),resultSet.getString(ADDRESS),resultSet.getString(ROLENAME),resultSet.getDouble(WALLET));
 			
 		}
 
@@ -63,10 +68,10 @@ public class OrdersDaoImpl {
 
 			String query = "update user_details set wallet=wallet-'" + order.getTotalPrice() + "' where user_id='"
 					+ userId + "'";
-			 statement = connection.createStatement();
+			statement = connection.createStatement();
 			statement.executeUpdate(query);
+			//statement.close();
 			String insertQuery = "insert into order_details(user_id,plant_id,quantity,totalprice,address,order_date) values(?,?,?,?,?,?)";
-
 			PreparedStatement preparedStatement = null;
 
 			try {
@@ -83,7 +88,7 @@ public class OrdersDaoImpl {
 
 				e.printStackTrace();
 			}finally {
-				ConnectionUtil.closePreparedStatement(preparedStatement, connection, rs1);
+				ConnectionUtil.closePreparedStatement(preparedStatement, connection, resultSet);
 			}
 		} 
 		
@@ -187,6 +192,8 @@ public class OrdersDaoImpl {
 		return flag;
 		
 	}
+	
+	
 	public String orderStatus(int orderid)
 	{   Connection connection = ConnectionUtil.getDbConnection();
 	    String query="select order_status from order_details  where orders_id=?";

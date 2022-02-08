@@ -39,23 +39,16 @@ public class OrdersDetailServlet extends HttpServlet {
 
 		UserDaoImpl userDao = new UserDaoImpl();
 		OrdersDaoImpl orderDao = new OrdersDaoImpl();
-	
 
 		try {
 			User user1 = orderDao.insertOrder(order);
 			int userId = user1.getUserId();
 			List<User> userList = userDao.myProfile(userId);
-			if (user1 != null) {
-				HttpSession session1 = request.getSession();
+			session.setAttribute("UpdateList", userList);
+			response.sendRedirect("ShowOrderServlet");
 
-				session1.setAttribute("UpdateList", userList);
-				response.sendRedirect("ShowOrderServlet");
-
-			} else  
-				response.sendRedirect("orderDetails.jsp");
-			
 		} catch (SQLException e) {
-			
+
 			e.printStackTrace();
 		}
 

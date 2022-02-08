@@ -2,7 +2,7 @@
 	pageEncoding="ISO-8859-1"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 <meta charset="ISO-8859-1">
 <title>delete product</title>
@@ -24,11 +24,11 @@
 		<h1 style="text-align: center;">Delete Product</h1>
 		<table>
 			<tr>
-				<td><b>Plant Id</b></td>
-				<td><b>Plant Name</b></td>
-				<td><b>Plant Description</b></td>
-				<td><b>category Name</b></td>
-				<td><b>Plant Price</b></td>
+				<td><strong>Plant Id</strong></td>
+				<td><strong>Plant Name</strong></td>
+				<td><strong>Plant Description</strong></td>
+				<td><strong>category Name</strong></td>
+				<td><strong>Plant Price</strong></td>
 			</tr>
 
 

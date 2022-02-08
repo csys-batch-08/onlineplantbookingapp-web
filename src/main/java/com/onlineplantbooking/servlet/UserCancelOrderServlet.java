@@ -26,7 +26,6 @@ public class UserCancelOrderServlet extends HttpServlet {
 		OrdersDaoImpl orderDao = new OrdersDaoImpl();
 		List<Orders> orderList = orderDao.showCancelOrder(user);
 		session.setAttribute("order", orderList);
-		System.out.println(orderList);
 		RequestDispatcher dispatcher = request.getRequestDispatcher("viewCancelOrder.jsp");
 		dispatcher.forward(request, response);
 

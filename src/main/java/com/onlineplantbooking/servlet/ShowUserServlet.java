@@ -9,7 +9,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
+
 
 import com.onlineplantbooking.daoImpl.UserDaoImpl;
 import com.onlineplantbooking.model.User;
@@ -29,9 +29,8 @@ public class ShowUserServlet extends HttpServlet {
 
 		UserDaoImpl userDao = new UserDaoImpl();
 		List<User> userList = userDao.showAllUser();
-		HttpSession session = request.getSession();
-		session.setAttribute("user", userList);
-		System.out.println(userList);
+		
+		request.setAttribute("user", userList);
 		RequestDispatcher dispatcher = request.getRequestDispatcher("showUser.jsp");
 		dispatcher.forward(request, response);
 

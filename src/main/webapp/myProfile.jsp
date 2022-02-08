@@ -4,7 +4,7 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
     
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 <meta charset="ISO-8859-1">
 <title>user profile</title>
@@ -31,10 +31,10 @@
      <c:forEach items="${user}" var="userProfile">
     
     
-	<b>Name:</b>${userProfile.name }<br><br>
-	<b>EmailId:</b>${userProfile.emailId }<br><br>
-	<b>Password:</b>${userProfile.password }<br><br>
-	<b>Mobile Number:</b>${userProfile.mobileNumber }<br><br>
+	<strong>Name:</strong>${userProfile.name }<br><br>
+	<strong>EmailId:</strong>${userProfile.emailId }<br><br>
+	<strong>Password:</strong>${userProfile.password }<br><br>
+	<strong>Mobile Number:</strong>${userProfile.mobileNumber }<br><br>
 
 	<b>Wallet:</b>${userProfile.wallet}<br><br>
 	<a href="rechargeWallet.jsp">Recharge Wallet</a>

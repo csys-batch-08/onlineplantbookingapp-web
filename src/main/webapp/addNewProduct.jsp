@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 <meta charset="ISO-8859-1">
 <title>Insert title here</title>
@@ -23,13 +23,13 @@
 
 <form action="insertProduct" method="post" >
  <div class="one">
-<label><h3>Enter Plant Name</h3></label>
+<h3>Enter Plant Name</h3>
 <input type="text" name="plantname" id="plantname" required><br>
-<label><h3>Enter plant description</h3></label>
+<h3>Enter plant description</h3>
 <input type="text" name="plantdescription" id="plantdescription" required><br>
-<label><h3>Enter plant price</h3></label>
+<h3>Enter plant price</h3>
 <input type="number" name=" plantprice" id="plantprice" min="1" required><br>
-<label><h3>Enter plant category</h3></label>
+<h3>Enter plant category</h3>
 <select name="category" id="category">
 <option value="medicinal">medicinal</option>
 <option value="bamboo" >bamboo</option>

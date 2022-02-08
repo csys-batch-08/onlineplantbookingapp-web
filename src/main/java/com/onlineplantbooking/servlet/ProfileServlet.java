@@ -29,7 +29,7 @@ public class ProfileServlet extends HttpServlet {
 		int userId=(int)session.getAttribute("userId");
 		List<User> userList=new ArrayList<User>();
 		userList=userDao.myProfile(userId);
-		session.setAttribute("user",userList);
+		request.setAttribute("user",userList);
 		RequestDispatcher dispatcher=request.getRequestDispatcher("myProfile.jsp");
 		dispatcher.forward(request, response);
 		

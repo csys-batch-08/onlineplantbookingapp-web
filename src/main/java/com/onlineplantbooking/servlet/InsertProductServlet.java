@@ -38,7 +38,7 @@ public class InsertProductServlet extends HttpServlet {
 		ProductDaoImpl productDao = new ProductDaoImpl();
 		
 			productDao.insertProduct(product);
-			response.sendRedirect("showProduct.jsp");
+			response.sendRedirect("admin.jsp");
 		
 			
 		

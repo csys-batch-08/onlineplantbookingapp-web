@@ -2,7 +2,7 @@
     pageEncoding="ISO-8859-1"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>    
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 <meta charset="ISO-8859-1">
 <title>Insert title here</title>
@@ -24,10 +24,10 @@
 </nav>            
 <table>
 <tr>
-<td><b>plant Name</b></td>
-<td><b>plant Description</b></td>
-<td><b>plant price</b></td>
-<td><b>category</b></td>
+<td><strong>plant Name</strong></td>
+<td><strong>plant Description</strong></td>
+<td><strong>plant price</strong></td>
+<td><strong>category</strong></td>
 </tr>
 <c:forEach items="${plantList}" var="plant">
 <tr>
@@ -35,7 +35,7 @@
 <td>${plant.plantDescription}</td>
 <td>${plant.plantPrice}</td>
 <td>${plant.categoryName}</td>
-<td><a href="orderDetails.jsp?plantName=${plant.plantName}&catName=${plant.categoryName}">Buy</a></td>
+<td><a href="BuyPlantServlet?productPrice=${plant.plantPrice }&plantName=${plant.plantName}&catName=${plant.categoryName}">Buy</a></td>
 </tr>
 </c:forEach>
 </table>

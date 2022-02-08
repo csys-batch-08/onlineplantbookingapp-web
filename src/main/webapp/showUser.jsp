@@ -8,7 +8,7 @@
         
     
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 <meta charset="ISO-8859-1">
 <title>Online Plant Booking</title>
@@ -31,12 +31,12 @@
 <form>
 <table class="center">
 <tr>
-<td><b>User Id</b></td>
-<td><b>Name</b></td>
-<td><b>Email Id</b></td>
-<td><b>Password</b></td>
-<td><b>Mobile Number</b></td>
-<td><b>Address</b></td>
+<td><strong>User Id</strong></td>
+<td><strong>Name</strong></td>
+<td><strong>Email Id</strong></td>
+<td><strong>Password</strong></td>
+<td><strong>Mobile Number</strong></td>
+<td><strong>Address</strong></td>
 </tr>
 
   

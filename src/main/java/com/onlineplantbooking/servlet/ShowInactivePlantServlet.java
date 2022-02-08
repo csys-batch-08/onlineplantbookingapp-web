@@ -9,7 +9,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
+
 
 import com.onlineplantbooking.daoImpl.ProductDaoImpl;
 import com.onlineplantbooking.model.Product;
@@ -24,8 +24,8 @@ public class ShowInactivePlantServlet extends HttpServlet {
 		
 		ProductDaoImpl productDaoImpl=new ProductDaoImpl();
 		List<Product> productList=productDaoImpl.showInactiveProduct();
-		HttpSession session=request.getSession();
-		session.setAttribute("plantinactiveList", productList);
+		
+		request.setAttribute("plantinactiveList", productList);
 		RequestDispatcher requestDispatcher=request.getRequestDispatcher("showInactiveProduct.jsp");
 		requestDispatcher.forward(request, response);
 	}

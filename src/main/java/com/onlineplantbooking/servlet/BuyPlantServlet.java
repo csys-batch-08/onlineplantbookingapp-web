@@ -22,7 +22,7 @@ public class BuyPlantServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		HttpSession session = request.getSession();
+		
 		String pName = request.getParameter("plantName");
 		String catName = request.getParameter("catName");
 		ProductDaoImpl proDao = new ProductDaoImpl();
@@ -30,9 +30,10 @@ public class BuyPlantServlet extends HttpServlet {
 		List<Product> priceList = proDao.findProductId(product);
 		List<Product> productList1 = new ArrayList<Product>();
 		productList1.add(product);
+		HttpSession session=request.getSession();
 		session.setAttribute("currentPlant", productList1);
 		session.setAttribute("currentPlant1", product);
-		session.setAttribute("productPrice", priceList);
+		request.setAttribute("productPrice", priceList);
 
 		RequestDispatcher dispatcher = request.getRequestDispatcher("orderDetails.jsp");
 		dispatcher.forward(request, response);
