@@ -71,10 +71,12 @@ public class ProductDaoImpl {
 				pstPreparedStatement.setString(5, product.getImage());
 				pstPreparedStatement.executeUpdate();
 
-			} catch (SQLException e) {
+			} 
+			catch (SQLException e) {
 
 				e.printStackTrace();
-			} finally {
+			} 
+			finally {
 				ConnectionUtil.closePreparedStatement(pstPreparedStatement, connection);
 			}
 
@@ -97,7 +99,7 @@ public class ProductDaoImpl {
 						resultSet.getString(CATEGORYNAME), resultSet.getString(PICTURE));
 				productList.add(product);
 			}
-			System.out.println(productList);
+			
 		} catch (SQLException e) {
 
 			e.printStackTrace();
