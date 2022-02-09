@@ -27,7 +27,7 @@ public class ProductDaoImpl {
 
 	// show product
 	public List<Product> showProduct() {
-		List<Product> productList = new ArrayList<Product>();
+		List<Product> productList = new ArrayList<>();
 
 		String showQuery = "select PLANT_ID,PLANT_NAME,PLANT_DESCRIPTION,PLANT_PRICE,CATEGORY_NAME,PICTURE"
 				+ " from product_details where plant_status='active'";
@@ -82,7 +82,8 @@ public class ProductDaoImpl {
 	public List<Product> showInactiveProduct() {
 		List<Product> productList = new ArrayList<Product>();
 
-		String showQuery = "select PLANT_ID,PLANT_NAME,PLANT_DESCRIPTION,PLANT_PRICE,CATEGORY_NAME,PICTURE from product_details where plant_status='inactive'";
+		String showQuery = "select PLANT_ID,PLANT_NAME,PLANT_DESCRIPTION,PLANT_PRICE,CATEGORY_NAME,PICTURE from "
+				+ "product_details where plant_status='inactive'";
 		Connection connection = ConnectionUtil.getDbConnection();
 		Statement statement = null;
 		ResultSet resultSet = null;
@@ -139,7 +140,8 @@ public class ProductDaoImpl {
 	}
 
 	public Product findProduct(int productId) {
-		String query = "select plant_id,PLANT_NAME,PLANT_DESCRIPTION,plant_price,CATEGORY_NAME from product_details where plant_id=?";
+		String query = "select plant_id,PLANT_NAME,PLANT_DESCRIPTION,plant_price,CATEGORY_NAME from "
+				+ "product_details where plant_id=?";
 
 		Connection connection = ConnectionUtil.getDbConnection();
 		Product products = null;

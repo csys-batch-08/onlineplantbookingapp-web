@@ -26,12 +26,12 @@
 <h2 style="text-align: center;">OFFER</h2>
 <table>
 <tr>
-<td><strong>PLANT</strong></td>
-<td><strong>PLANT NAME</strong></td>
-<td><strong>PLANT DESCRIPTION</strong></td>
-<td><strong>CATEGORY NAME</strong></td>
-<td><strong>PLANT PRICE</strong></td>
-<td><strong>BUY</strong></td>
+<th><strong>PLANT</strong></th>
+<th><strong>PLANT NAME</strong></th>
+<th><strong>PLANT DESCRIPTION</strong></th>
+<th><strong>CATEGORY NAME</strong></th>
+<th><strong>PLANT PRICE</strong></th>
+<th><strong>BUY</strong></th>
 
 </tr>
  <c:forEach items="${plantOffer}" var="offerplant">
