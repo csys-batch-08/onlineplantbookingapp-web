@@ -32,7 +32,7 @@ public class OrdersDaoImpl {
 	static final String ORDERSTATUS = "ORDER_STATUS";
 
 //insert order	
-	public User insertOrder(Orders order) throws SQLException {
+	public User insertOrder(Orders order) throws SQLException  {
 		ProductDaoImpl proDaoImpl = new ProductDaoImpl();
 
 		UserDaoImpl userDaoImpl = new UserDaoImpl();
@@ -166,6 +166,7 @@ public class OrdersDaoImpl {
 
 	}
 
+	
 	public boolean cancelOrder(int orderid)
 
 	{

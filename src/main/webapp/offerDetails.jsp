@@ -28,7 +28,7 @@
 <div class="one">
 <form action="ordersDetailServlet"  onmouseover="myFunct()">
 <h1 >BUY YOUR PLANT</h1>
-<label for="plantId" ><b>PlantName:</b></label>
+<label for="plantId" ><strong>PlantName:</strong></label>
 <input type="text" value="${offer.plantName }"><br><br>
 <strong>Quantity:</strong><input type="number" onkeyup="myFunct()" value=1 name="quantity" id="quantity" min="1"><br><br>
 <strong>Address:</strong><input type="text"  name="addresss"   id="address" required><br><br>

@@ -41,7 +41,7 @@ public class ProductDaoImpl {
 				Product product = new Product(resultSet.getInt(PLANTID), resultSet.getString(PLANTNAME),
 						resultSet.getString(PLANTDESCRIPTION), Integer.parseInt(resultSet.getString(PLANTPRICE)),
 						resultSet.getString(CATEGORYNAME), resultSet.getString(PICTURE));
-				productList.add(product);
+				        productList.add(product);
 			}
 		} catch (SQLException e) {
 

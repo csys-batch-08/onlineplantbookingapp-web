@@ -26,11 +26,11 @@
 <h1 style="text-align: left;"> Show Order</h1>
 <table>
 <tr>
-<td><strong>User Name</strong></td>
-<td><strong>Product Name</strong></td>
-<td><strong>Quantity</strong></td>
-<td><strong>Price</strong></td>
-<td><strong>Order Date</strong></td>
+<th><strong>User Name</strong></th>
+<th><strong>Product Name</strong></th>
+<th><strong>Quantity</strong></th>
+<th><strong>Price</strong></th>
+<th><strong>Order Date</strong></th>
 </tr>
 
 

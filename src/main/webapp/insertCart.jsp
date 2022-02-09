@@ -15,10 +15,10 @@
 <c:set var="plantId"    scope="session" value="${plantid}"/>
 
 <form action="InserCartServlet" >
-<h2><b>Plant Id</b></h2><input type="text" value="${plantId }" name="plantId"><br><br>
-<h2><b>Plant Name</b></h2><input type="text" value="${plantName}" name="plantname"><br><br>
-<h2><b>Plant Price</b></h2><input type="text" value="${plantPrice}" name="Price"><br><br>
-<button type="submit"><b>submit</b></button><br><br>
+<h2><strong>Plant Id</strong></h2><input type="text" value="${plantId }" name="plantId"><br><br>
+<h2><strong>Plant Name</strong></h2><input type="text" value="${plantName}" name="plantname"><br><br>
+<h2><strong>Plant Price</strong></h2><input type="text" value="${plantPrice}" name="Price"><br><br>
+<button type="submit"><strong>submit</strong></button><br><br>
 </form>
 </body>
 </html>

@@ -25,11 +25,11 @@
 		<table>
 		
 			<tr>
-				<td><strong>Plant Id</strong></td>
-				<td><strong>Plant Name</strong></td>
-				<td><strong>Plant Description</strong></td>
-				<td><strong>category Name</strong></td>
-				<td><strong>Plant Price</strong></td>
+				<th><strong>Plant Id</strong></th>
+				<th><strong>Plant Name</strong></th>
+				<th><strong>Plant Description</strong></th>
+				<th><strong>category Name</strong></th>
+				<th><strong>Plant Price</strong></th>
 			</tr>
 
 
