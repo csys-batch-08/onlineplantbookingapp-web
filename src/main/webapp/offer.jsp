@@ -31,7 +31,7 @@
 <td><strong>PLANT DESCRIPTION</strong></td>
 <td><strong>CATEGORY NAME</strong></td>
 <td><strong>PLANT PRICE</strong></td>
-<td><b>BUY</b></td>
+<td><strong>BUY</strong></td>
 
 </tr>
  <c:forEach items="${plantOffer}" var="offerplant">

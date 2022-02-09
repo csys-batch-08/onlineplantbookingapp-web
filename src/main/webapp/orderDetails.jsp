@@ -37,9 +37,9 @@
 <input type="text" id="plantId" value="${currentplant.plantName}">
 </c:forEach>
 <br><br>
-<b>Quantity:</b><input type="number" onkeyup="myFunct()" value=1 name="quantity" id="quantity" min="1"><br><br>
-<b>Address:</b><input type="text"  name="addresss"   id="address" required><br><br>
-<b>Total Price:</b><input type="number"  name="total"   id="price"><br><br>
+<strong>Quantity:</strong><input type="number" onkeyup="myFunct()" value=1 name="quantity" id="quantity" min="1"><br><br>
+<strong>Address:</strong><input type="text"  name="addresss"   id="address" required><br><br>
+<strong>Total Price:</strong><input type="number"  name="total"   id="price"><br><br>
 <br>
 <button type="submit" id="submit">Submit</button>
 <input type="reset">
@@ -49,7 +49,8 @@
 
 <c:forEach items="${productPrice}" var="productPr">
 <script type="text/javascript">
-function myFunct() {
+function myFunct() 
+{
 	var count=document.getElementById("quantity").value;
 	var totalPrice=document.getElementById("price");
 	console.log(count);

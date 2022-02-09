@@ -47,12 +47,12 @@
 <div class="one"> 
 <table>
 <tr>
-<td><strong>User Name</strong></td>
-<td><strong>Product Name</strong></td>
-<td><strong>Quantity</strong></td>
-<td><strong>Price</strong></td>
-<td><strong>Order Date</strong></td>
-<td><strong>cancel</strong></td>
+<th><strong>User Name</strong></th>
+<th><strong>Product Name</strong></th>
+<th><strong>Quantity</strong></th>
+<th><strong>Price</strong></th>
+<th><strong>Order Date</strong></th>
+<th><strong>cancel</strong></th>
 
 </tr>
 <c:forEach items="${order}" var="orderList">
@@ -63,7 +63,6 @@
 <td>${orderList.totalPrice }</td>
 <fmt:parseDate value="${orderList.orderDate}" pattern="yyyy-MM-dd HH:mm" var="orderDate" type="date" />
 <td><fmt:formatDate pattern="dd-MM-yyyy HH:mm" value="${orderDate}" />	
-
 <td><a href="ordercancelserv?orderid=${orderList.orderid }&price=${orderList.totalPrice }">cancel</a></td>
 </tr>
 </c:forEach>

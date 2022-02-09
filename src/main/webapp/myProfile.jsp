@@ -36,7 +36,7 @@
 	<strong>Password:</strong>${userProfile.password }<br><br>
 	<strong>Mobile Number:</strong>${userProfile.mobileNumber }<br><br>
 
-	<b>Wallet:</b>${userProfile.wallet}<br><br>
+	<strong>Wallet:</strong>${userProfile.wallet}<br><br>
 	<a href="rechargeWallet.jsp">Recharge Wallet</a>
 	</c:forEach>
 	</div>

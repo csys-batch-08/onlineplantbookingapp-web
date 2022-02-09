@@ -37,12 +37,12 @@
 <form>
 <table>
 <tr>
-<td><b>Plant</b></td>
-<td><b>Plant Name</b></td>
-<td><b>Plant Description</b></td>
-<td><b>category Name</b></td>
-<td><b>Plant Price</b></td>
-<td><b>Update</b></td>
+<td><strong>Plant</strong></td>
+<td><strong>Plant Name</strong></td>
+<td><strong>Plant Description</strong></td>
+<td><strong>category Name</strong></td>
+<td><strong>Plant Price</strong></td>
+<td><strong>Update</strong></td>
 </tr>
 
 
@@ -57,20 +57,11 @@
 	  <td><a href="UpdateServlet?productId=${Showproduct.plantId}">Update</a></td>
 	  </tr>
 	  </c:forEach>
-	  	  
 	  </table>
 	  </form>
 	  </body>
 	  </html>
 	  
-	  
-	 	  
-	  
-	  
-	  
-   
-   
-   
 
 
 

@@ -23,6 +23,7 @@
 	<form action="updateProduct" method="post">
 		<h1 style="text-align: center;">Delete Product</h1>
 		<table>
+		
 			<tr>
 				<td><strong>Plant Id</strong></td>
 				<td><strong>Plant Name</strong></td>

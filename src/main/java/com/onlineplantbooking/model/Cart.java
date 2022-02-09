@@ -1,7 +1,13 @@
 package com.onlineplantbooking.model;
 
-public class Cart {
-	     int cartId; 
+import java.io.Serializable;
+
+public class Cart implements Serializable{
+	     /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+		int cartId; 
 	     int userId;
          int plantId;
          public int getCartId() {

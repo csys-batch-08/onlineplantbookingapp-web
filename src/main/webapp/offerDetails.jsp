@@ -30,9 +30,9 @@
 <h1 >BUY YOUR PLANT</h1>
 <label for="plantId" ><b>PlantName:</b></label>
 <input type="text" value="${offer.plantName }"><br><br>
-<b>Quantity:</b><input type="number" onkeyup="myFunct()" value=1 name="quantity" id="quantity" min="1"><br><br>
-<b>Address:</b><input type="text"  name="addresss"   id="address" required><br><br>
-<b>Total Price:</b><input type="number"  name="total" id="price"><br><br>
+<strong>Quantity:</strong><input type="number" onkeyup="myFunct()" value=1 name="quantity" id="quantity" min="1"><br><br>
+<strong>Address:</strong><input type="text"  name="addresss"   id="address" required><br><br>
+<strong>Total Price:</strong><input type="number"  name="total" id="price"><br><br>
 <br>
 
 <button type="submit" id="submit"> Submit</button>

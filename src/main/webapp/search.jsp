@@ -32,13 +32,12 @@
 	<table class="center">
 		<tr>
 			
-			<td><strong>Plant Name</strong></td>
-			<td><strong>Plant Description</strong></td>
-			<td><strong>category Name</strong></td>
-			<td><strong>Plant Price</strong></td>
-			<td><strong>Buy Now</strong></td>
-			
-			<td><strong>Add To Cart</strong></td>
+			<th><strong>Plant Name</strong></th>
+			<th><strong>Plant Description</strong></th>
+			<th><strong>category Name</strong></th>
+			<th><strong>Plant Price</strong></th>
+			<th><strong>Buy Now</strong></th>
+			<th><strong>Add To Cart</strong></th>
 		</tr> 
 		
  <c:forEach items="${list}" var="search">	

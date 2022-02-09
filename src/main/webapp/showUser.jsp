@@ -31,12 +31,12 @@
 <form>
 <table class="center">
 <tr>
-<td><strong>User Id</strong></td>
-<td><strong>Name</strong></td>
-<td><strong>Email Id</strong></td>
-<td><strong>Password</strong></td>
-<td><strong>Mobile Number</strong></td>
-<td><strong>Address</strong></td>
+<th><strong>User Id</strong></th>
+<th><strong>Name</strong></th>
+<th><strong>Email Id</strong></th>
+<th><strong>Password</strong></th>
+<th><strong>Mobile Number</strong></th>
+<th><strong>Address</strong></th>
 </tr>
 
   
@@ -55,7 +55,6 @@
 	 
 	 </c:forEach>
 	 </table>
-	  
-	  </form>
+ </form>
 </body>
 </html>

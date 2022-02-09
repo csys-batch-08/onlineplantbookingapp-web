@@ -10,7 +10,7 @@
  </head>
 <body>
 <h1 style="text-align: center;">Contact Us</h1>
-<p><b>Contact Number:8967564534</b><p>
-<p><b>Website:saranya6122@gmail.com</b>
+<p><strong>Contact Number:8967564534</strong></p>
+<p><strong>Website:saranya6122@gmail.com</strong></p>
 </body>
 </html>

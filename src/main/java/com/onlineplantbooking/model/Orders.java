@@ -1,8 +1,14 @@
 package com.onlineplantbooking.model;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class Orders {
+public class Orders implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	public Orders() {
 		super();
 		// TODO Auto-generated constructor stub

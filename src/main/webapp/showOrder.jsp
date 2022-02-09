@@ -50,7 +50,7 @@
 </div>
 
 <c:set var="wallet" scope="session" value="${User}"/>
-<h3>Wallet Balane:${wallet }</h3>
+<h3>Wallet Balance:${wallet }</h3>
 
 </body>
 </html>

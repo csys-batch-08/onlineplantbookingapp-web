@@ -24,10 +24,10 @@
 </nav>            
 <table>
 <tr>
-<td><strong>plant Name</strong></td>
-<td><strong>plant Description</strong></td>
-<td><strong>plant price</strong></td>
-<td><strong>category</strong></td>
+<th><strong>plant Name</strong></th>
+<th><strong>plant Description</strong></th>
+<th><strong>plant price</strong></th>
+<th><strong>category</strong></th>
 </tr>
 <c:forEach items="${plantList}" var="plant">
 <tr>
