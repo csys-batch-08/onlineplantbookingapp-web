@@ -17,23 +17,32 @@ public class CartInsertServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		String plantName = request.getParameter("plantName");
-		double price = Double.parseDouble(request.getParameter("plantPrice"));
-		int plantId = Integer.parseInt(request.getParameter("plantId"));
-		HttpSession session = request.getSession();
-		session.setAttribute("plantname", plantName);
-		session.setAttribute("plantprice", price);
-		session.setAttribute("plantid", plantId);
-		RequestDispatcher req = request.getRequestDispatcher("insertCart.jsp");
-		req.forward(request, response);
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		try {
+			String plantName = request.getParameter("plantName");
+			double price = Double.parseDouble(request.getParameter("plantPrice"));
+			int plantId = Integer.parseInt(request.getParameter("plantId"));
+			HttpSession session = request.getSession();
+			session.setAttribute("plantname", plantName);
+			session.setAttribute("plantprice", price);
+			session.setAttribute("plantid", plantId);
+			RequestDispatcher req = request.getRequestDispatcher("insertCart.jsp");
+			req.forward(request, response);
+			response.getWriter().append("Served at: ").append(request.getContextPath());
+		} catch (NumberFormatException e) {
+
+			e.printStackTrace();
+		} catch (ServletException e) {
+
+			e.printStackTrace();
+		} catch (IOException e) {
+
+			e.printStackTrace();
+		}
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
-
-		doGet(request, response);
 	}
 
 }

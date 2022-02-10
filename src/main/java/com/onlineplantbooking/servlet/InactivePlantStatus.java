@@ -18,16 +18,24 @@ public class InactivePlantStatus extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
-		int productId = Integer.parseInt(request.getParameter("productId"));
-		ProductDaoImpl productDaoImpl = new ProductDaoImpl();
-		int i = productDaoImpl.updateStatus(productId);
+		try {
+			int productId = Integer.parseInt(request.getParameter("productId"));
+			ProductDaoImpl productDaoImpl = new ProductDaoImpl();
+			int i = productDaoImpl.updateStatus(productId);
 
-		if (i > 0) {
-			PrintWriter out = response.getWriter();
-			out.println("<script type=\"text/javascript\">");
-			out.println("alert('plant status updated Successfully');");
-			out.println("location='admin.jsp';");
-			out.println("</script>");
+			if (i > 0) {
+				PrintWriter out = response.getWriter();
+				out.println("<script type=\"text/javascript\">");
+				out.println("alert('plant status updated Successfully');");
+				out.println("location='admin.jsp';");
+				out.println("</script>");
+			}
+		} catch (NumberFormatException e) {
+			
+			e.printStackTrace();
+		} catch (IOException e) {
+			
+			e.printStackTrace();
 		}
 
 	}
@@ -35,7 +43,7 @@ public class InactivePlantStatus extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
-		doGet(request, response);
+		
 	}
 
 }

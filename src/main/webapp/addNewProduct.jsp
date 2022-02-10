@@ -26,22 +26,22 @@
 		<div class="one">
 			<table>
 				<tr>
-					<td>Enter Plant Name</td>
+					<th>Enter Plant Name</th>
 					<td><input type="text" name="plantname" id="plantname"
 						required></td>
 				</tr>
 				<tr>
-					<td>Enter plant description</td>
+					<th>Enter plant description</th>
 					<td><input type="text" name="plantdescription"
 						id="plantdescription" required></td>
 				</tr>
 				<tr>
-					<td>Enter plant price</td>
+					<th>Enter plant price</th>
 					<td><input type="number" name=" plantprice" id="plantprice"
 						min="1" required></td>
 				</tr>
 				<tr>
-					<td>Enter plant category</td>
+					<th>Enter plant category</th>
 					<td><select name="category" id="category">
 							<option value="medicinal">medicinal</option>
 							<option value="bamboo">bamboo</option>

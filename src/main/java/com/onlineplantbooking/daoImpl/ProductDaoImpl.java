@@ -74,7 +74,7 @@ public class ProductDaoImpl {
 
 			e.printStackTrace();
 		} finally {
-			ConnectionUtil.closePreparedStatement(pstPreparedStatement, connection);
+			ConnectionUtil.closePreparedStatement(pstPreparedStatement,connection);
 		}
 
 	}

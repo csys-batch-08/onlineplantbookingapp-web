@@ -23,26 +23,33 @@ public class BuyPlantServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		
-		String pName = request.getParameter("plantName");
-		String catName = request.getParameter("catName");
-		ProductDaoImpl proDao = new ProductDaoImpl();
-		Product product = new Product(pName, catName);
-		List<Product> priceList = proDao.findProductId(product);
-		List<Product> productList1 = new ArrayList<Product>();
-		productList1.add(product);
-		HttpSession session=request.getSession();
-		session.setAttribute("currentPlant", productList1);
-		session.setAttribute("currentPlant1", product);
-		request.setAttribute("productPrice", priceList);
+		try {
+			String pName = request.getParameter("plantName");
+			String catName = request.getParameter("catName");
+			ProductDaoImpl proDao = new ProductDaoImpl();
+			Product product = new Product(pName, catName);
+			List<Product> priceList = proDao.findProductId(product);
+			List<Product> productList1 = new ArrayList<Product>();
+			productList1.add(product);
+			HttpSession session=request.getSession();
+			session.setAttribute("currentPlant", productList1);
+			session.setAttribute("currentPlant1", product);
+			request.setAttribute("productPrice", priceList);
 
-		RequestDispatcher dispatcher = request.getRequestDispatcher("orderDetails.jsp");
-		dispatcher.forward(request, response);
+			RequestDispatcher dispatcher = request.getRequestDispatcher("orderDetails.jsp");
+			dispatcher.forward(request, response);
+		} catch (ServletException e) {
+			
+		} catch (IOException e) {
+			
+			e.printStackTrace();
+		}
 
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 		 throws ServletException, IOException {
-		doGet(request, response);
+		
 	}
 
 }

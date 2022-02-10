@@ -20,17 +20,25 @@ public class AdminDeleteproServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		ProductDaoImpl productDao = new ProductDaoImpl();
-		List<Product> productList = productDao.showProduct();
-		request.setAttribute("product", productList);
-		RequestDispatcher dispatcher = request.getRequestDispatcher("deleteProduct.jsp");
-		dispatcher.forward(request, response);
+		try {
+			ProductDaoImpl productDao = new ProductDaoImpl();
+			List<Product> productList = productDao.showProduct();
+			request.setAttribute("product", productList);
+			RequestDispatcher dispatcher = request.getRequestDispatcher("deleteProduct.jsp");
+			dispatcher.forward(request, response);
+		} catch (ServletException e) {
+			
+			e.printStackTrace();
+		} catch (IOException e) {
+			
+			e.printStackTrace();
+		}
 
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		doGet(request, response);
+		
 	}
 
 }

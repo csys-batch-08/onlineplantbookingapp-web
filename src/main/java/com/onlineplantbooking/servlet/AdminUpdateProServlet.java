@@ -21,13 +21,21 @@ public class AdminUpdateProServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		ProductDaoImpl productDao = new ProductDaoImpl();
-		List<Product> productList = productDao.showProduct();
-		request.setAttribute("product", productList);
-		RequestDispatcher req = request.getRequestDispatcher("showProduct.jsp");
-		req.forward(request, response);
+		try {
+			ProductDaoImpl productDao = new ProductDaoImpl();
+			List<Product> productList = productDao.showProduct();
+			request.setAttribute("product", productList);
+			RequestDispatcher req = request.getRequestDispatcher("showProduct.jsp");
+			req.forward(request, response);
+		} catch (ServletException e) {
+			
+			e.printStackTrace();
+		} catch (IOException e) {
+			
+			e.printStackTrace();
+		}
 
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		
 	}
 
 }

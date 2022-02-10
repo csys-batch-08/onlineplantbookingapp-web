@@ -17,10 +17,18 @@ public class DeleteProductServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
-		ProductDaoImpl productDaoImpl = new ProductDaoImpl();
-		int productId = Integer.parseInt(request.getParameter("plantId"));
-		productDaoImpl.deleteProduct(productId);
-		response.sendRedirect("admin.jsp");
+		try {
+			ProductDaoImpl productDaoImpl = new ProductDaoImpl();
+			int productId = Integer.parseInt(request.getParameter("plantId"));
+			productDaoImpl.deleteProduct(productId);
+			response.sendRedirect("admin.jsp");
+		} catch (NumberFormatException e) {
+			
+			e.printStackTrace();
+		} catch (IOException e) {
+			
+			e.printStackTrace();
+		}
 
 	}
 
@@ -32,7 +40,7 @@ public class DeleteProductServlet extends HttpServlet {
 		productDao.deleteProduct(productId);
 		response.sendRedirect("admin.jsp");
 
-		doGet(request, response);
+		
 	}
 
 }
