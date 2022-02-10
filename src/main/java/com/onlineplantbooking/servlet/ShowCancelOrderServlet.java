@@ -21,7 +21,8 @@ public class ShowCancelOrderServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+			throws ServletException, IOException
+	{
 		HttpSession session = request.getSession();
 		User user = (User) session.getAttribute("currentUser");
 		OrdersDaoImpl orderDao = new OrdersDaoImpl();
@@ -29,11 +30,10 @@ public class ShowCancelOrderServlet extends HttpServlet {
 		session.setAttribute("order", orderList);
 		RequestDispatcher dispatcher = request.getRequestDispatcher("orderCancel.jsp");
 		dispatcher.forward(request, response);
+	
 	}
-
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-				
 		doGet(request, response);
 	}
 

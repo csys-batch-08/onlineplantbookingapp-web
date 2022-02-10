@@ -3,6 +3,10 @@ table,tr,th, td {
   border: 5px solid black;
   border-collapse: collapse;
 }
+h1{
+	text-align: center;
+}
+
 body{
     
     background-image: url("../images/table.jpg");

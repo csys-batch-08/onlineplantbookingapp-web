@@ -49,11 +49,11 @@ public class CartDaoImpl {
 
 //fetch cart	
 
-	public List<Product> fetchCart(int userId)
-	{
-		
+	public List<Product> fetchCart(int userId) {
+
 		List<Product> productList = new ArrayList<>();
-		String query = "select plant_id,plant_name,plant_description,plant_price,category_name from product_details where plant_id in(select plant_id from cart where user_id in ?)";
+		String query = "select plant_id,plant_name,plant_description,plant_price,category_name from"
+				+ " product_details where plant_id in(select plant_id from cart where user_id in ?)";
 		Connection connection = ConnectionUtil.getDbConnection();
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;
@@ -68,7 +68,6 @@ public class CartDaoImpl {
 						resultSet.getString(CATEGORYNAME)));
 
 			}
-			System.out.println(productList);
 
 		} catch (SQLException e) {
 			e.printStackTrace();

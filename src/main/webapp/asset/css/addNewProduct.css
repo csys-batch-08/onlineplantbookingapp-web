@@ -14,6 +14,9 @@ body{
     list-style: none;
     color: #fff;
 }
+h1{
+	text-align: center;
+}
 .menu-bar ul li
 {
 width: 100px;

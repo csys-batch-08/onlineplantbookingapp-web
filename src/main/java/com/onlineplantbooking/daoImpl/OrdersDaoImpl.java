@@ -4,11 +4,10 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
 import com.onlineplantbooking.model.Orders;
 import com.onlineplantbooking.model.Product;
 import com.onlineplantbooking.model.User;
@@ -32,66 +31,87 @@ public class OrdersDaoImpl {
 	static final String ORDERSTATUS = "ORDER_STATUS";
 
 //insert order	
-	public User insertOrder(Orders order) throws SQLException  {
-		ProductDaoImpl proDaoImpl = new ProductDaoImpl();
-
+	public User insertOrder(Orders order) {
 		UserDaoImpl userDaoImpl = new UserDaoImpl();
 		int userId = userDaoImpl.findUserId(order.getUser());
-		List<Product> plant_List = proDaoImpl.findProductId(order.getProduct());
 		PreparedStatement preparedStatement = null;
 
-		int plant_id = 0;
+		Connection connection = ConnectionUtil.getDbConnection();
+		String query2 = "select user_id,user_name,email_id,user_password,mobile_number,address,role_name,"
+				+ "wallet from user_details where user_id=?";
+		User user = null;
+		ResultSet resultSet = null;
+		try {
+			preparedStatement = connection.prepareStatement(query2);
+			preparedStatement.setInt(1, userId);
+			resultSet = preparedStatement.executeQuery();
+			double wallet = 0;
+			if (resultSet.next()) {
+				wallet = resultSet.getDouble(WALLET);
+				user = new User(resultSet.getInt(USERID), resultSet.getString(USERNAME), resultSet.getString(EMAILD),
+						resultSet.getString(USERPASSWORD), resultSet.getLong(MOBILENUMBER),
+						resultSet.getString(ADDRESS), resultSet.getString(ROLENAME), resultSet.getDouble(WALLET));
+			}
+
+			if (wallet > order.getTotalPrice()) {
+				updateUserDetail(order.getTotalPrice(), userId);
+				OrdersDaoImpl daoImpl=new OrdersDaoImpl();
+				daoImpl.order(order);
+
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			ConnectionUtil.closePreparedStatement(preparedStatement, connection, resultSet);
+		}
+		return user;
+	}
+
+	public void updateUserDetail(int price, int user_id) {
+		String updateQuery = "update user_details set wallet=wallet-? where user_id=?";
+		Connection connection = ConnectionUtil.getDbConnection();
+		PreparedStatement pstPreparedStatement = null;
+		try {
+			pstPreparedStatement = connection.prepareStatement(updateQuery);
+			pstPreparedStatement.setInt(1, price);
+			pstPreparedStatement.setInt(2, user_id);
+			pstPreparedStatement.executeUpdate();
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+		} finally {
+			ConnectionUtil.closePreparedStatement(pstPreparedStatement, connection);
+
+		}
+
+	}
+
+	public void order(Orders orders) {
+		String query = "insert into order_details(user_id,PLANT_ID,quantity,totalprice,address,order_date) values(?,?,?,?,?,?) ";
+		Connection connection = ConnectionUtil.getDbConnection();
+		PreparedStatement preparedStatement = null;
+		ProductDaoImpl daoImpl=new ProductDaoImpl();
+		List<Product> plant_List =daoImpl.findProductId(orders.getProduct());
+		int plant_id=0;
 		for (int i = 0; i < plant_List.size(); i++) {
 			plant_id = plant_List.get(i).getPlantId();
 		}
-
-		Connection connection = ConnectionUtil.getDbConnection();
-		String query2 = "select user_id,user_name,email_id,user_password,mobile_number,address,role_name,wallet "
-				+ "from user_details where user_id=?";
-		preparedStatement = connection.prepareStatement(query2);
-		preparedStatement.setInt(1, userId);
-		ResultSet resultSet = preparedStatement.executeQuery();
-
-		double wallet = 0;
-		User user = null;
-		if (resultSet.next()) {
-			wallet = resultSet.getDouble(WALLET);
-			user = new User(resultSet.getInt(USERID), resultSet.getString(USERNAME), resultSet.getString(EMAILD),
-					resultSet.getString(USERPASSWORD), resultSet.getLong(MOBILENUMBER), resultSet.getString(ADDRESS),
-					resultSet.getString(ROLENAME), resultSet.getDouble(WALLET));
-
-		}
-
-		if (wallet > order.getTotalPrice()) {
-
-			String query = "update user_details set wallet=wallet-? where user_id=?";
-
+		try {
 			preparedStatement = connection.prepareStatement(query);
-			preparedStatement.setInt(1, order.getTotalPrice());
-			preparedStatement.setInt(2, userId);
-
+			preparedStatement.setInt(1, orders.getUser().getUserId());
+			preparedStatement.setInt(2,plant_id );
+			preparedStatement.setInt(3, orders.getQuantity());
+			preparedStatement.setDouble(4, orders.getTotalPrice());
+			preparedStatement.setString(5, orders.getAddress());
+			preparedStatement.setDate(6, new java.sql.Date(new Date().getTime()));
 			preparedStatement.executeUpdate();
-			String insertQuery = "insert into order_details(user_id,plant_id,quantity,totalprice,address,order_date) values(?,?,?,?,?,?)";
+		} catch (SQLException e) {
 
-			try {
-				preparedStatement = connection.prepareStatement(insertQuery);
-				preparedStatement.setInt(1, userId);
-				preparedStatement.setInt(2, plant_id);
-				preparedStatement.setInt(3, order.getQuantity());
-				preparedStatement.setDouble(4, order.getTotalPrice());
-				preparedStatement.setString(5, order.getAddress());
-				preparedStatement.setDate(6, new java.sql.Date(new Date().getTime()));
-				preparedStatement.executeUpdate();
-
-			} catch (SQLException e) {
-
-				e.printStackTrace();
-			} finally {
-				ConnectionUtil.closePreparedStatement(preparedStatement, connection, resultSet);
-			}
+			e.printStackTrace();
 		}
-
-		return user;
+   finally{
+	   ConnectionUtil.closePreparedStatement(preparedStatement, connection);
+   }
 	}
 
 //admin  update product
@@ -116,7 +136,6 @@ public class OrdersDaoImpl {
 	}
 
 //delete product
-
 	public void delete(int orderId) {
 		String deleteQuery = "delete from plant_orders where order_id=?";
 		Connection connection = ConnectionUtil.getDbConnection();
@@ -137,7 +156,7 @@ public class OrdersDaoImpl {
 
 // user show order
 	public List<Orders> ShowOrder(User user) {
-		List<Orders> orderList = new ArrayList<Orders>();
+		List<Orders> orderList = new ArrayList();
 		String query = "select user_id,plant_id,quantity,totalprice,address,order_date,order_status  from order_details  where"
 				+ " order_status='not delivered' and  user_id=? order by order_date desc";
 		Connection connection = ConnectionUtil.getDbConnection();
@@ -161,14 +180,10 @@ public class OrdersDaoImpl {
 		} finally {
 			ConnectionUtil.closePreparedStatement(preparedStatement, connection, resultSet);
 		}
-
 		return orderList;
-
 	}
 
-	
 	public boolean cancelOrder(int orderid)
-
 	{
 		Connection connection = ConnectionUtil.getDbConnection();
 		String query = "update order_details set ORDER_STATUS='cancel' where orders_id=?";
@@ -185,8 +200,7 @@ public class OrdersDaoImpl {
 			ConnectionUtil.closePreparedStatement(PreparedStatement, connection);
 		}
 		return flag;
-
-	}
+}
 
 	public String orderStatus(int orderid) {
 		Connection connection = ConnectionUtil.getDbConnection();
@@ -213,15 +227,16 @@ public class OrdersDaoImpl {
 	}
 
 	public List<Orders> ShowOrders(User user) {
-		List<Orders> orderList = new ArrayList<Orders>();
-		String query = "select  ORDERS_ID,PLANT_ID,USER_ID,QUANTITY,TOTALPRICE,ADDRESS,ORDER_DATE from order_details  where user_id="
-				+ user.getUserId() + "order by order_date desc";
+		List<Orders> orderList = new ArrayList();
+		String query = "select  ORDERS_ID,PLANT_ID,USER_ID,QUANTITY,TOTALPRICE,ADDRESS,ORDER_DATE "
+				+ "from order_details  where user_id= ? order by order_date desc";
 		Connection connection = ConnectionUtil.getDbConnection();
-		Statement statement = null;
+		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;
 		try {
-			statement = connection.createStatement();
-			resultSet = statement.executeQuery(query);
+			preparedStatement = connection.prepareStatement(query);
+			preparedStatement.setInt(1, user.getUserId());
+			resultSet = preparedStatement.executeQuery();
 			while (resultSet.next()) {
 				ProductDaoImpl producDaoImpl = new ProductDaoImpl();
 				Product product = producDaoImpl.findProduct(resultSet.getInt(PLANTID));
@@ -234,24 +249,24 @@ public class OrdersDaoImpl {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
-			ConnectionUtil.closeStatement(statement, connection, resultSet);
+			ConnectionUtil.closePreparedStatement(preparedStatement, connection, resultSet);
 		}
 
 		return orderList;
-
 	}
 	// show cancel orders
 
 	public List<Orders> showCancelOrder(User user) {
 		Connection connection = ConnectionUtil.getDbConnection();
-		List<Orders> orderList = new ArrayList<Orders>();
-		String Query = "select   ORDERS_ID,PLANT_ID,USER_ID,QUANTITY,TOTALPRICE,ADDRESS,ORDER_DATE,ORDER_STATUS from order_details where order_status='cancel' and user_id='"
-				+ user.getUserId() + "'order by order_date desc";
+		List<Orders> orderList = new ArrayList();
+		String Query = "select   ORDERS_ID,PLANT_ID,USER_ID,QUANTITY,TOTALPRICE,ADDRESS,ORDER_DATE,ORDER_STATUS from order_details "
+				+ "where order_status='cancel' and user_id=? order by order_date desc";
 		ResultSet resultSet = null;
-		Statement statement = null;
+		PreparedStatement preparedStatement = null;
 		try {
-			statement = connection.createStatement();
-			resultSet = statement.executeQuery(Query);
+			preparedStatement = connection.prepareStatement(Query);
+			preparedStatement.setInt(1, user.getUserId());
+			resultSet = preparedStatement.executeQuery();
 			while (resultSet.next()) {
 
 				ProductDaoImpl producDaoImpl = new ProductDaoImpl();
@@ -263,16 +278,14 @@ public class OrdersDaoImpl {
 				orderList.add(order);
 
 			}
-			return orderList;
+
 		} catch (SQLException e) {
 
 			e.printStackTrace();
 		}
-
 		finally {
-			ConnectionUtil.closeStatement(statement, connection, resultSet);
+			ConnectionUtil.closePreparedStatement(preparedStatement, connection, resultSet);
 		}
-
 		return orderList;
 
 	}

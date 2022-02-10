@@ -76,27 +76,24 @@ public class UserDaoImpl {
 		return user;
 	}
 
-	public void update(String update)  {
+	public void update(String update) {
 
 		String updateQuery = "update user_details set user_password=? where email_id=?";
 		Connection connection = ConnectionUtil.getDbConnection();
-		PreparedStatement preparedStatement =null;
+		PreparedStatement preparedStatement = null;
 		try {
-			 preparedStatement = connection.prepareStatement(updateQuery);
+			preparedStatement = connection.prepareStatement(updateQuery);
 			preparedStatement.setString(1, update.split(",")[0]);
 			preparedStatement.setString(2, update.split(",")[1]);
 			preparedStatement.executeUpdate();
-			
+
 		} catch (SQLException e) {
-			
+
 			e.printStackTrace();
-		}
-		finally {
+		} finally {
 			ConnectionUtil.closePreparedStatement(preparedStatement, connection);
 		}
-		
-		
-		
+
 	}
 
 //show all user method 
@@ -107,12 +104,12 @@ public class UserDaoImpl {
 		String selectQuery = "select USER_ID,USER_NAME,EMAIL_ID,USER_PASSWORD,MOBILE_NUMBER,ADDRESS  from user_details where role_name='user'";
 
 		Connection connection = ConnectionUtil.getDbConnection();
-		Statement Statement = null;
+		PreparedStatement preparedStatement=null;
 		ResultSet resultSet = null;
 
 		try {
-			Statement = connection.createStatement();
-			resultSet = Statement.executeQuery(selectQuery);
+			preparedStatement = connection.prepareStatement(selectQuery);
+			resultSet = preparedStatement.executeQuery();
 			while (resultSet.next()) {
 				userList.add(new User(resultSet.getInt(USERID), resultSet.getString(USERNAME),
 						resultSet.getString(EMAILD), resultSet.getString(USERPASSWORD),
@@ -122,24 +119,24 @@ public class UserDaoImpl {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
-			ConnectionUtil.closeStatement(Statement, connection, resultSet);
+			ConnectionUtil.closePreparedStatement(preparedStatement, connection, resultSet);
 		}
 
 		return userList;
 	}
 
 	public int findUserId(User currentUser) {
-
-		String findUserID = "select user_id from user_details where user_name='" + currentUser.getName() + "'";
+		String findUserID = "select user_id from user_details where user_name=? ";
 		Connection connection = ConnectionUtil.getDbConnection();
-		Statement statement = null;
+		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;
 
 		int userId = 0;
 		try {
-			statement = connection.createStatement();
+			preparedStatement = connection.prepareStatement(findUserID);
+			preparedStatement.setString(1, currentUser.getName());
 
-			resultSet = statement.executeQuery(findUserID);
+			resultSet = preparedStatement.executeQuery();
 
 			if (resultSet.next()) {
 
@@ -151,7 +148,7 @@ public class UserDaoImpl {
 
 			e.printStackTrace();
 		} finally {
-			ConnectionUtil.closeStatement(statement, connection, resultSet);
+			ConnectionUtil.closePreparedStatement(preparedStatement, connection, resultSet);
 		}
 		return userId;
 
@@ -159,15 +156,15 @@ public class UserDaoImpl {
 
 	public User findUser(int userId) {
 
-		String findUserID = "select USER_NAME,EMAIL_ID,USER_PASSWORD,MOBILE_NUMBER,ADDRESS from user_details where user_id="
-				+ userId;
+		String findUserID = "select USER_NAME,EMAIL_ID,USER_PASSWORD,MOBILE_NUMBER,ADDRESS from user_details where user_id=?";
 		Connection connection = ConnectionUtil.getDbConnection();
-		Statement statement = null;
+		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;
 		User user = null;
 		try {
-			statement = connection.createStatement();
-			resultSet = statement.executeQuery(findUserID);
+			preparedStatement = connection.prepareStatement(findUserID);
+			preparedStatement.setInt(1, userId);
+			resultSet = preparedStatement.executeQuery();
 
 			if (resultSet.next()) {
 
@@ -181,7 +178,7 @@ public class UserDaoImpl {
 
 			e.printStackTrace();
 		} finally {
-			ConnectionUtil.closeStatement(statement, connection, resultSet);
+			ConnectionUtil.closePreparedStatement(preparedStatement, connection, resultSet);
 		}
 
 		return user;
@@ -209,22 +206,22 @@ public class UserDaoImpl {
 			ConnectionUtil.closePreparedStatement(PreparedStatement, connection, resultSet);
 		}
 		
-		
-		return -1;
+	return -1;
 	}
 
 
 
 	public User findUser(String email) {
-		String findUserID = "select USER_NAME,EMAIL_ID,USER_PASSWORD,MOBILE_NUMBER,ADDRESS from user_details where emailId='"
-				+ email + "'";
-		Connection con = ConnectionUtil.getDbConnection();
+		String findUserID = "select USER_NAME,EMAIL_ID,USER_PASSWORD,MOBILE_NUMBER,ADDRESS from user_details where emailId=?";
+		Connection connection = ConnectionUtil.getDbConnection();
 		User user = null;
 		ResultSet resultSet = null;
-		Statement statement = null;
+		PreparedStatement preparedStatement=null;
 		try {
-			statement = con.createStatement();
-			resultSet = statement.executeQuery(findUserID);
+			
+			preparedStatement=connection.prepareStatement(findUserID);
+			preparedStatement.setString(1,email );
+			resultSet = preparedStatement.executeQuery();
 
 			if (resultSet.next()) {
 
@@ -238,7 +235,7 @@ public class UserDaoImpl {
 
 			e.printStackTrace();
 		} finally {
-			ConnectionUtil.closeStatement(statement, con, resultSet);
+			ConnectionUtil.closePreparedStatement(preparedStatement, connection, resultSet);
 		}
 		return user;
 
@@ -246,27 +243,20 @@ public class UserDaoImpl {
 
 //wallet update
 	public int updatewall(User user) {
-
 		Connection connection = ConnectionUtil.getDbConnection();
 		String query = "update user_details set wallet=wallet +  ? where email_id = ?";
 		PreparedStatement PreparedStatement = null;
 		int i = 0;
 		try {
-
 			PreparedStatement = connection.prepareStatement(query);
-
 			PreparedStatement.setDouble(1, user.getWallet());
 			PreparedStatement.setString(2, user.getEmailId());
 			i = PreparedStatement.executeUpdate();
 			PreparedStatement.executeUpdate("commit");
-
 			return i;
-
 		} catch (SQLException e) {
-
 			e.printStackTrace();
 		}
-
 		finally {
 			ConnectionUtil.closePreparedStatement(PreparedStatement, connection);
 		}
@@ -286,12 +276,10 @@ public class UserDaoImpl {
 			preparedStatement.setString(3, user.getPassword());
 			preparedStatement.setLong(4, user.getMobileNumber());
 			preparedStatement.setString(5, user.getAddress());
-
 			preparedStatement.executeUpdate();
 			preparedStatement.close();
 			connection.close();
 		} catch (SQLException e) {
-
 			e.printStackTrace();
 		} finally {
 			ConnectionUtil.closePreparedStatement(preparedStatement, connection);
@@ -316,13 +304,11 @@ public class UserDaoImpl {
 				userList.add(user);
 			}
 		} catch (SQLException e) {
-
 			e.printStackTrace();
 		} finally {
 			ConnectionUtil.closePreparedStatement(PreparedStatement, connection, resultSet);
 		}
 		return userList;
-
 	}
 
 	public List<User> myProfileUpdate(int userId) {
@@ -330,15 +316,15 @@ public class UserDaoImpl {
 		String profile = "select  USER_ID,USER_NAME,EMAIL_ID,USER_PASSWORD,MOBILE_NUMBER,ADDRESS,ROLE_NAME,WALLET  from user_details where user_id=?";
 		Connection connection = ConnectionUtil.getDbConnection();
 		PreparedStatement PreparedStatement = null;
-		ResultSet rs = null;
+		ResultSet resultSet = null;
 		try {
 			PreparedStatement = connection.prepareStatement(profile);
 			PreparedStatement.setInt(1, userId);
-			rs = PreparedStatement.executeQuery();
-			while (rs.next()) {
-				User user = new User(rs.getInt(USERID), rs.getString(USERNAME), rs.getString(EMAILD),
-						rs.getString(USERPASSWORD), rs.getLong(MOBILENUMBER), rs.getString(ADDRESS),
-						rs.getString(ROLENAME), rs.getDouble(WALLET));
+			resultSet = PreparedStatement.executeQuery();
+			while (resultSet.next()) {
+				User user = new User(resultSet.getInt(USERID), resultSet.getString(USERNAME), resultSet.getString(EMAILD),
+						resultSet.getString(USERPASSWORD), resultSet.getLong(MOBILENUMBER), resultSet.getString(ADDRESS),
+						resultSet.getString(ROLENAME), resultSet.getDouble(WALLET));
 				userList.add(user);
 			}
 		} catch (SQLException e) {
@@ -346,29 +332,28 @@ public class UserDaoImpl {
 			e.printStackTrace();
 		} finally {
 
-			ConnectionUtil.closePreparedStatement(PreparedStatement, connection, rs);
+			ConnectionUtil.closePreparedStatement(PreparedStatement, connection, resultSet);
 		}
-
 		return userList;
-
 	}
 
 	public boolean refundWallet(User user, int price) {
 		Connection connection = ConnectionUtil.getDbConnection();
-		UserDaoImpl userdao = new UserDaoImpl();
-		int userId = userdao.findUserId(user);
-		String updateQuery1 = "update user_details set wallet=" + (user.getWallet() + price) + "where user_id="
-				+ user.getUserId();
-		Statement statement = null;
+		String updateQuery = "update user_details set wallet=(?+?) where user_id=?";
+				
+		PreparedStatement preparedStatement=null;
 		boolean flag = false;
 		try {
-			statement = connection.createStatement();
-			flag = statement.executeUpdate(updateQuery1) > 0;
+			preparedStatement=connection.prepareStatement(updateQuery);
+			preparedStatement.setDouble(1, user.getWallet());
+			preparedStatement.setInt(2,price);
+			preparedStatement.setInt(3, user.getUserId());
+			flag = preparedStatement.executeUpdate() > 0;
 
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
-			ConnectionUtil.closeStatement(statement, connection);
+			ConnectionUtil.closePreparedStatement(preparedStatement, connection);
 		}
 		return flag;
 

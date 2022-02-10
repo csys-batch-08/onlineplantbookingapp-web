@@ -32,16 +32,16 @@ public class ProductDaoImpl {
 		String showQuery = "select PLANT_ID,PLANT_NAME,PLANT_DESCRIPTION,PLANT_PRICE,CATEGORY_NAME,PICTURE"
 				+ " from product_details where plant_status='active'";
 		Connection connection = ConnectionUtil.getDbConnection();
-		Statement statement = null;
+		PreparedStatement preparedStatement=null;
 		ResultSet resultSet = null;
 		try {
-			statement = connection.createStatement();
-			resultSet = statement.executeQuery(showQuery);
+			preparedStatement=connection.prepareStatement(showQuery);
+			resultSet =preparedStatement .executeQuery();
 			while (resultSet.next()) {
 				Product product = new Product(resultSet.getInt(PLANTID), resultSet.getString(PLANTNAME),
 						resultSet.getString(PLANTDESCRIPTION), Integer.parseInt(resultSet.getString(PLANTPRICE)),
 						resultSet.getString(CATEGORYNAME), resultSet.getString(PICTURE));
-				        productList.add(product);
+				productList.add(product);
 			}
 		} catch (SQLException e) {
 
@@ -49,7 +49,7 @@ public class ProductDaoImpl {
 		}
 
 		finally {
-			ConnectionUtil.closeStatement(statement, connection, resultSet);
+			ConnectionUtil.closePreparedStatement(preparedStatement, connection, resultSet);
 		}
 		return productList;
 
@@ -85,12 +85,12 @@ public class ProductDaoImpl {
 		String showQuery = "select PLANT_ID,PLANT_NAME,PLANT_DESCRIPTION,PLANT_PRICE,CATEGORY_NAME,PICTURE from "
 				+ "product_details where plant_status='inactive'";
 		Connection connection = ConnectionUtil.getDbConnection();
-		Statement statement = null;
+		PreparedStatement preparedStatement=null;
 		ResultSet resultSet = null;
 
 		try {
-			statement = connection.createStatement();
-			resultSet = statement.executeQuery(showQuery);
+			preparedStatement=connection.prepareStatement(showQuery);
+			resultSet = preparedStatement.executeQuery();
 			while (resultSet.next()) {
 				Product product = new Product(resultSet.getInt(PLANTID), resultSet.getString(PLANTNAME),
 						resultSet.getString(PLANTDESCRIPTION), Integer.parseInt(resultSet.getString(PLANTPRICE)),
@@ -102,7 +102,7 @@ public class ProductDaoImpl {
 
 			e.printStackTrace();
 		} finally {
-			ConnectionUtil.closeStatement(statement, connection, resultSet);
+			ConnectionUtil.closePreparedStatement(preparedStatement, connection, resultSet);
 		}
 		return productList;
 
@@ -235,20 +235,22 @@ public class ProductDaoImpl {
 			ConnectionUtil.closePreparedStatement(PreparedStatement, connection);
 
 		}
-
 	}
 
 	public List<Product> filterPlant(String search) {
 		List<Product> plantList = new ArrayList<Product>();
 		Product product = null;
-		Statement statement = null;
+		PreparedStatement preparedStatement=null;
 		ResultSet resultSet = null;
-		String Query = "select PLANT_NAME,PLANT_DESCRIPTION,PLANT_PRICE,CATEGORY_NAME,PICTURE from product_details where PLANT_NAME like '"
-				+ search + "%' or  CATEGORY_NAME like '" + search + "%'";
+		String plantName="%"+search+"%";
+		String categoryName="%"+search+"%";
+		String Query = "select PLANT_NAME,PLANT_DESCRIPTION,PLANT_PRICE,CATEGORY_NAME,PICTURE from product_details where PLANT_NAME like ? or  CATEGORY_NAME like ?";
 		Connection connection = ConnectionUtil.getDbConnection();
 		try {
-			statement = connection.createStatement();
-			resultSet = statement.executeQuery(Query);
+			preparedStatement=connection.prepareStatement(Query);
+			preparedStatement.setString(1,plantName );
+			preparedStatement.setString(2,categoryName );
+			resultSet =preparedStatement .executeQuery();
 			while (resultSet.next()) {
 				product = new Product(resultSet.getString(PLANTNAME), resultSet.getString(PLANTDESCRIPTION),
 						resultSet.getInt(PLANTPRICE), resultSet.getString(CATEGORYNAME), resultSet.getString(PICTURE));
@@ -258,7 +260,7 @@ public class ProductDaoImpl {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
-			ConnectionUtil.closeStatement(statement, connection, resultSet);
+			ConnectionUtil.closePreparedStatement(preparedStatement, connection, resultSet);
 
 		}
 
@@ -288,10 +290,8 @@ public class ProductDaoImpl {
 				order.setProduct(product);
 				order.setQuantity(resultSet.getInt(SUMQUANTITY));
 				products.add(order);
-
 			}
 		} catch (SQLException e) {
-
 			e.printStackTrace();
 		} finally {
 			ConnectionUtil.closePreparedStatement(preparedStatement, connection, resultSet);

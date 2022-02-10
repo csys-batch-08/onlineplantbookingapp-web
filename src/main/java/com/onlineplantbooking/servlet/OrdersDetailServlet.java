@@ -40,17 +40,14 @@ public class OrdersDetailServlet extends HttpServlet {
 		UserDaoImpl userDao = new UserDaoImpl();
 		OrdersDaoImpl orderDao = new OrdersDaoImpl();
 
-		try {
+		
 			User user1 = orderDao.insertOrder(order);
 			int userId = user1.getUserId();
 			List<User> userList = userDao.myProfile(userId);
 			session.setAttribute("UpdateList", userList);
 			response.sendRedirect("ShowOrderServlet");
 
-		} catch (SQLException e) {
-
-			e.printStackTrace();
-		}
+		
 
 	}
 

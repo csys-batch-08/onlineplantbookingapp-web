@@ -14,38 +14,32 @@ import javax.servlet.http.HttpSession;
 import com.onlineplantbooking.daoImpl.CartDaoImpl;
 import com.onlineplantbooking.model.Product;
 
-
 @WebServlet("/ViewUserCartServlet")
 public class ViewUserCartServlet extends HttpServlet {
-	
-   
+
 	private static final long serialVersionUID = 1L;
 
-
 	public ViewUserCartServlet() {
-        super();
-        
-    }
+		super();
 
-	
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-		CartDaoImpl cartDao=new CartDaoImpl();
-		HttpSession session=request.getSession();
-		int userId=(int)session.getAttribute("userId");
- 		List<Product> productList=cartDao.fetchCart(userId);
- 		session.setAttribute("plantList", productList);
-		
-		RequestDispatcher req=request.getRequestDispatcher("userCart.jsp");
-		 req.forward(request, response);
-		
-		
-		
 	}
 
-	
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+
+		CartDaoImpl cartDao = new CartDaoImpl();
+		HttpSession session = request.getSession();
+		int userId = (int) session.getAttribute("userId");
+		List<Product> productList = cartDao.fetchCart(userId);
+		session.setAttribute("plantList", productList);
+		RequestDispatcher req = request.getRequestDispatcher("userCart.jsp");
+		req.forward(request, response);
+
+	}
+
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+
 		doGet(request, response);
 	}
 
