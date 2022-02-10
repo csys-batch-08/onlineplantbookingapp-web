@@ -17,18 +17,29 @@ public class UpdateServlet extends HttpServlet {
     
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		int plantId=Integer.parseInt(request.getParameter("productId"));
-		HttpSession session = request.getSession();
-		session.setAttribute("plantID",plantId );
-		RequestDispatcher requestDispatcher=request.getRequestDispatcher("updateProduct.jsp");
-		requestDispatcher.forward(request, response);
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		try {
+			int plantId=Integer.parseInt(request.getParameter("productId"));
+			HttpSession session = request.getSession();
+			session.setAttribute("plantID",plantId );
+			RequestDispatcher requestDispatcher=request.getRequestDispatcher("updateProduct.jsp");
+			requestDispatcher.forward(request, response);
+			response.getWriter().append("Served at: ").append(request.getContextPath());
+		} catch (NumberFormatException e) {
+			
+			e.printStackTrace();
+		} catch (ServletException e) {
+			
+			e.printStackTrace();
+		} catch (IOException e) {
+			
+			e.printStackTrace();
+		}
 	}
 
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		doGet(request, response);
+		
 	}
 
 }

@@ -49,13 +49,18 @@ public class OrderCancelServlet extends HttpServlet {
 				}
 			} catch (OrderCancelException e) {
 				session.setAttribute("cancel", e.getMessage());
-				response.sendRedirect("orderCancel.jsp");
+				try {
+					response.sendRedirect("orderCancel.jsp");
+				} catch (Exception e1) {
+
+					e1.printStackTrace();
+				}
 			}
 		} catch (NumberFormatException e) {
-			
+
 			e.printStackTrace();
 		} catch (IOException e) {
-			
+
 			e.printStackTrace();
 		}
 	}
