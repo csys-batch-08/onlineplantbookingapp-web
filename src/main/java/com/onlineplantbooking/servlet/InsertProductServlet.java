@@ -29,16 +29,24 @@ public class InsertProductServlet extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		String plantName = request.getParameter("plantname");
-		String plantDescription = request.getParameter("plantdescription");
-		int plantPrice = Integer.parseInt(request.getParameter(" plantprice"));
-		String category = request.getParameter("category");
-		String image = request.getParameter("plantimage");
-		Product product = new Product(plantName, plantDescription, plantPrice, category, image);
-		ProductDaoImpl productDao = new ProductDaoImpl();
-		
-			productDao.insertProduct(product);
-			response.sendRedirect("admin.jsp");
+		try {
+			String plantName = request.getParameter("plantname");
+			String plantDescription = request.getParameter("plantdescription");
+			int plantPrice = Integer.parseInt(request.getParameter(" plantprice"));
+			String category = request.getParameter("category");
+			String image = request.getParameter("plantimage");
+			Product product = new Product(plantName, plantDescription, plantPrice, category, image);
+			ProductDaoImpl productDao = new ProductDaoImpl();
+			
+				productDao.insertProduct(product);
+				response.sendRedirect("admin.jsp");
+		} catch (NumberFormatException e) {
+			
+			e.printStackTrace();
+		} catch (IOException e) {
+			
+			e.printStackTrace();
+		}
 		
 			
 		

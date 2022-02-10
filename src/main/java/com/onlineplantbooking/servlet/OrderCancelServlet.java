@@ -21,34 +21,42 @@ public class OrderCancelServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		response.getWriter().append("Served at: ").append(request.getContextPath());
-		int orderid = Integer.parseInt(request.getParameter("orderid"));
-		int price = Integer.parseInt(request.getParameter("price"));
-		HttpSession session = request.getSession();
-		User user = (User) session.getAttribute("currentUser");
-		OrdersDaoImpl orderdao = new OrdersDaoImpl();
-		String status = orderdao.orderStatus(orderid);
 		try {
+			response.getWriter().append("Served at: ").append(request.getContextPath());
+			int orderid = Integer.parseInt(request.getParameter("orderid"));
+			int price = Integer.parseInt(request.getParameter("price"));
+			HttpSession session = request.getSession();
+			User user = (User) session.getAttribute("currentUser");
+			OrdersDaoImpl orderdao = new OrdersDaoImpl();
+			String status = orderdao.orderStatus(orderid);
+			try {
 
-			if (status.equals("cancel")) {
-				throw new OrderCancelException();
+				if (status.equals("cancel")) {
+					throw new OrderCancelException();
 
-			} else {
+				} else {
 
-				boolean b = orderdao.cancelOrder(orderid);
-				if (b == true) {
-					UserDaoImpl userdao = new UserDaoImpl();
-					boolean b1 = userdao.refundWallet(user, price);
-					if (b1 == true) {
-						session.setAttribute("cancelsuccess", true);
-						response.sendRedirect("orderCancel.jsp");
+					boolean b = orderdao.cancelOrder(orderid);
+					if (b == true) {
+						UserDaoImpl userdao = new UserDaoImpl();
+						boolean b1 = userdao.refundWallet(user, price);
+						if (b1 == true) {
+							session.setAttribute("cancelsuccess", true);
+							response.sendRedirect("orderCancel.jsp");
 
+						}
 					}
 				}
+			} catch (OrderCancelException e) {
+				session.setAttribute("cancel", e.getMessage());
+				response.sendRedirect("orderCancel.jsp");
 			}
-		} catch (OrderCancelException e) {
-			session.setAttribute("cancel", e.getMessage());
-			response.sendRedirect("orderCancel.jsp");
+		} catch (NumberFormatException e) {
+			
+			e.printStackTrace();
+		} catch (IOException e) {
+			
+			e.printStackTrace();
 		}
 	}
 }

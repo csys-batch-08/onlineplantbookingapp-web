@@ -25,28 +25,36 @@ public class LoginServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
-		HttpSession session = request.getSession();
-		String emailId = request.getParameter("loginemail");
-		String password = request.getParameter("loginpassword");
-		UserDaoImpl userDao = new UserDaoImpl();
-		User user = userDao.validateUser(emailId, password);
-		String role = user.getRole();
+		try {
+			HttpSession session = request.getSession();
+			String emailId = request.getParameter("loginemail");
+			String password = request.getParameter("loginpassword");
+			UserDaoImpl userDao = new UserDaoImpl();
+			User user = userDao.validateUser(emailId, password);
+			String role = user.getRole();
 
-		
-		session.setAttribute("userId", user.getUserId());
-		
-		if (role.equals("user")) {
-			session.setAttribute("currentUser", user);
-			ProductDaoImpl productDao = new ProductDaoImpl();
-			List<Orders> order = productDao.offerPlant();
-			request.setAttribute("plantOffer", order);
-			RequestDispatcher req = request.getRequestDispatcher("ShowProductServlet");
-			req.forward(request, response);
+			
+			session.setAttribute("userId", user.getUserId());
+			
+			if (role.equals("user")) {
+				session.setAttribute("currentUser", user);
+				ProductDaoImpl productDao = new ProductDaoImpl();
+				List<Orders> order = productDao.offerPlant();
+				request.setAttribute("plantOffer", order);
+				RequestDispatcher req = request.getRequestDispatcher("ShowProductServlet");
+				req.forward(request, response);
 
-		} else if (role.equals("admin")) {
+			} else if (role.equals("admin")) {
 
-			response.sendRedirect("admin.jsp?userId=0");
+				response.sendRedirect("admin.jsp?userId=0");
 
+			}
+		} catch (ServletException e) {
+	
+			e.printStackTrace();
+		} catch (IOException e) {
+			
+			e.printStackTrace();
 		}
 	}
 }

@@ -25,16 +25,24 @@ public class RegisterServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
-		String name = request.getParameter("username");
-		String emailId = request.getParameter("email");
-		String password = request.getParameter("password");
-		Long mobileNumber = Long.parseLong(request.getParameter("mobilenumber"));
-		String address = request.getParameter("address");
-		User user = new User(name, emailId, password, mobileNumber, address);
-		UserDaoImpl userDaoImpl = new UserDaoImpl();
-		userDaoImpl.insertUser(user);
+		try {
+			String name = request.getParameter("username");
+			String emailId = request.getParameter("email");
+			String password = request.getParameter("password");
+			Long mobileNumber = Long.parseLong(request.getParameter("mobilenumber"));
+			String address = request.getParameter("address");
+			User user = new User(name, emailId, password, mobileNumber, address);
+			UserDaoImpl userDaoImpl = new UserDaoImpl();
+			userDaoImpl.insertUser(user);
 
-		response.sendRedirect("login.jsp");
+			response.sendRedirect("login.jsp");
+		} catch (NumberFormatException e) {
+
+			e.printStackTrace();
+		} catch (IOException e) {
+
+			e.printStackTrace();
+		}
 
 	}
 

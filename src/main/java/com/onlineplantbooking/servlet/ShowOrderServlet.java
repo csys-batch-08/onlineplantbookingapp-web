@@ -23,24 +23,29 @@ public class ShowOrderServlet extends HttpServlet {
 
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		OrdersDaoImpl orderDao=new OrdersDaoImpl();
-		
-		HttpSession session=request.getSession(); 
-		
-		List<User> userList=(List<User>) session.getAttribute("UpdateList");
-       	
-		List<Orders> orderList=orderDao.ShowOrder(userList.get(0));
-		
-		session.setAttribute("showOrder",orderList);
-		session.setAttribute("User", userList.get(0).getWallet());
-		response.sendRedirect("showOrder.jsp");
+		try {
+			OrdersDaoImpl orderDao=new OrdersDaoImpl();
+			
+			HttpSession session=request.getSession(); 
+			
+			List<User> userList=(List<User>) session.getAttribute("UpdateList");
+			
+			List<Orders> orderList=orderDao.ShowOrder(userList.get(0));
+			
+			session.setAttribute("showOrder",orderList);
+			session.setAttribute("User", userList.get(0).getWallet());
+			response.sendRedirect("showOrder.jsp");
+		} catch (IOException e) {
+			
+			e.printStackTrace();
+		}
 	    
 	}
 
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		doGet(request, response);
+		
 	}
 
 }

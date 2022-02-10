@@ -35,10 +35,18 @@ public class DeleteProductServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
-		ProductDaoImpl productDao = new ProductDaoImpl();
-		int productId = Integer.parseInt(request.getParameter("plantId"));
-		productDao.deleteProduct(productId);
-		response.sendRedirect("admin.jsp");
+		try {
+			ProductDaoImpl productDao = new ProductDaoImpl();
+			int productId = Integer.parseInt(request.getParameter("plantId"));
+			productDao.deleteProduct(productId);
+			response.sendRedirect("admin.jsp");
+		} catch (NumberFormatException e) {
+			
+			e.printStackTrace();
+		} catch (IOException e) {
+			
+			e.printStackTrace();
+		}
 
 		
 	}

@@ -27,20 +27,27 @@ public class ViewUserCartServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
-		CartDaoImpl cartDao = new CartDaoImpl();
-		HttpSession session = request.getSession();
-		int userId = (int) session.getAttribute("userId");
-		List<Product> productList = cartDao.fetchCart(userId);
-		session.setAttribute("plantList", productList);
-		RequestDispatcher req = request.getRequestDispatcher("userCart.jsp");
-		req.forward(request, response);
+		try {
+			CartDaoImpl cartDao = new CartDaoImpl();
+			HttpSession session = request.getSession();
+			int userId = (int) session.getAttribute("userId");
+			List<Product> productList = cartDao.fetchCart(userId);
+			session.setAttribute("plantList", productList);
+			RequestDispatcher req = request.getRequestDispatcher("userCart.jsp");
+			req.forward(request, response);
+		} catch (ServletException e) {
+
+			e.printStackTrace();
+		} catch (IOException e) {
+
+			e.printStackTrace();
+		}
 
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
-		doGet(request, response);
 	}
 
 }

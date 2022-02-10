@@ -22,20 +22,25 @@ public class SearchServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
-		response.getWriter().append("Served at: ").append(request.getContextPath());
-		String search = request.getParameter("search");
-		ProductDaoImpl productDao = new ProductDaoImpl();
-		List<Product> listProduct = productDao.filterPlant(search);
+		try {
+			response.getWriter().append("Served at: ").append(request.getContextPath());
+			String search = request.getParameter("search");
+			ProductDaoImpl productDao = new ProductDaoImpl();
+			List<Product> listProduct = productDao.filterPlant(search);
 
-		HttpSession session = request.getSession();
-		session.setAttribute("list", listProduct);
-		response.sendRedirect("search.jsp");
+			HttpSession session = request.getSession();
+			session.setAttribute("list", listProduct);
+			response.sendRedirect("search.jsp");
+		} catch (IOException e) {
+
+			e.printStackTrace();
+		}
 
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		
+
 		doGet(request, response);
 	}
 

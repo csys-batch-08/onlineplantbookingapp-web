@@ -21,20 +21,28 @@ public class UserCancelOrderServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		HttpSession session = request.getSession();
-		User user = (User) session.getAttribute("currentUser");
-		OrdersDaoImpl orderDao = new OrdersDaoImpl();
-		List<Orders> orderList = orderDao.showCancelOrder(user);
-		session.setAttribute("order", orderList);
-		RequestDispatcher dispatcher = request.getRequestDispatcher("viewCancelOrder.jsp");
-		dispatcher.forward(request, response);
+		try {
+			HttpSession session = request.getSession();
+			User user = (User) session.getAttribute("currentUser");
+			OrdersDaoImpl orderDao = new OrdersDaoImpl();
+			List<Orders> orderList = orderDao.showCancelOrder(user);
+			session.setAttribute("order", orderList);
+			RequestDispatcher dispatcher = request.getRequestDispatcher("viewCancelOrder.jsp");
+			dispatcher.forward(request, response);
 
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+			response.getWriter().append("Served at: ").append(request.getContextPath());
+		} catch (ServletException e) {
+
+			e.printStackTrace();
+		} catch (IOException e) {
+
+			e.printStackTrace();
+		}
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		doGet(request, response);
+
 	}
 
 }

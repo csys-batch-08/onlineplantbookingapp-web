@@ -22,18 +22,26 @@ public class ShowInactivePlantServlet extends HttpServlet {
     
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		ProductDaoImpl productDaoImpl=new ProductDaoImpl();
-		List<Product> productList=productDaoImpl.showInactiveProduct();
-		
-		request.setAttribute("plantinactiveList", productList);
-		RequestDispatcher requestDispatcher=request.getRequestDispatcher("showInactiveProduct.jsp");
-		requestDispatcher.forward(request, response);
+		try {
+			ProductDaoImpl productDaoImpl=new ProductDaoImpl();
+			List<Product> productList=productDaoImpl.showInactiveProduct();
+			
+			request.setAttribute("plantinactiveList", productList);
+			RequestDispatcher requestDispatcher=request.getRequestDispatcher("showInactiveProduct.jsp");
+			requestDispatcher.forward(request, response);
+		} catch (ServletException e) {
+			
+			e.printStackTrace();
+		} catch (IOException e) {
+			
+			e.printStackTrace();
+		}
 	}
 
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		doGet(request, response);
+		
 	}
 
 }

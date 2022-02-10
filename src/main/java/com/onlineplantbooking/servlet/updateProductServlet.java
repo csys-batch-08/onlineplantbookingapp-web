@@ -18,15 +18,22 @@ public class updateProductServlet extends HttpServlet {
 	protected void service(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
-		ProductDaoImpl productDao = new ProductDaoImpl();
+		try {
+			ProductDaoImpl productDao = new ProductDaoImpl();
 
-		int plantId = Integer.parseInt(request.getParameter("plantId"));
-		int plantPrice = Integer.parseInt(request.getParameter("plantPrice"));
-		
+			int plantId = Integer.parseInt(request.getParameter("plantId"));
+			int plantPrice = Integer.parseInt(request.getParameter("plantPrice"));
 
-		 productDao.updateProduct(plantId, plantPrice);
+			productDao.updateProduct(plantId, plantPrice);
 
-		response.sendRedirect("admin.jsp");
+			response.sendRedirect("admin.jsp");
+		} catch (NumberFormatException e) {
+
+			e.printStackTrace();
+		} catch (IOException e) {
+
+			e.printStackTrace();
+		}
 
 	}
 

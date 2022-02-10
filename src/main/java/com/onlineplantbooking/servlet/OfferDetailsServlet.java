@@ -25,30 +25,38 @@ public class OfferDetailsServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		String plantName = request.getParameter("plantName");
-		String categoryName = request.getParameter("catName");
+		try {
+			String plantName = request.getParameter("plantName");
+			String categoryName = request.getParameter("catName");
 
-		double offerPrice = Double.parseDouble(request.getParameter("offerprice"));
-		int offerprice = (int) Math.round(offerPrice);
-		Product product = new Product();
-		product.setPlantName(plantName);
-		product.setCategoryName(categoryName);
-		product.setPlantPrice(offerprice);
+			double offerPrice = Double.parseDouble(request.getParameter("offerprice"));
+			int offerprice = (int) Math.round(offerPrice);
+			Product product = new Product();
+			product.setPlantName(plantName);
+			product.setCategoryName(categoryName);
+			product.setPlantPrice(offerprice);
 
-		List<Product> productList = new ArrayList<Product>();
-		productList.add(product);
-		HttpSession session = request.getSession();
-		request.setAttribute("productOffer", productList);
-		session.setAttribute("currentPlant1", product);
-		RequestDispatcher requestDispatcher = request.getRequestDispatcher("offerDetails.jsp");
-		requestDispatcher.forward(request, response);
+			List<Product> productList = new ArrayList<Product>();
+			productList.add(product);
+			HttpSession session = request.getSession();
+			request.setAttribute("productOffer", productList);
+			session.setAttribute("currentPlant1", product);
+			RequestDispatcher requestDispatcher = request.getRequestDispatcher("offerDetails.jsp");
+			requestDispatcher.forward(request, response);
+		} catch (NumberFormatException e) {
+
+			e.printStackTrace();
+		} catch (ServletException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
-		doGet(request, response);
 	}
 
 }

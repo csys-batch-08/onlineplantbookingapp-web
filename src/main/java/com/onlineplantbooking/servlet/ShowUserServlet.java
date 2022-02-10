@@ -27,14 +27,22 @@ public class ShowUserServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
-		UserDaoImpl userDao = new UserDaoImpl();
-		List<User> userList = userDao.showAllUser();
-		
-		request.setAttribute("user", userList);
-		RequestDispatcher dispatcher = request.getRequestDispatcher("showUser.jsp");
-		dispatcher.forward(request, response);
+		try {
+			UserDaoImpl userDao = new UserDaoImpl();
+			List<User> userList = userDao.showAllUser();
+			
+			request.setAttribute("user", userList);
+			RequestDispatcher dispatcher = request.getRequestDispatcher("showUser.jsp");
+			dispatcher.forward(request, response);
 
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+			response.getWriter().append("Served at: ").append(request.getContextPath());
+		} catch (ServletException e) {
+			
+			e.printStackTrace();
+		} catch (IOException e) {
+			
+			e.printStackTrace();
+		}
 	}
 
 }

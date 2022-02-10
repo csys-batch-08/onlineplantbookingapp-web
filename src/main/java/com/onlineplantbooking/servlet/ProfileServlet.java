@@ -24,17 +24,25 @@ public class ProfileServlet extends HttpServlet {
 
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		UserDaoImpl userDao=new UserDaoImpl();
-		HttpSession session=request.getSession();
-		int userId=(int)session.getAttribute("userId");
-		List<User> userList=new ArrayList<User>();
-		userList=userDao.myProfile(userId);
-		request.setAttribute("user",userList);
-		RequestDispatcher dispatcher=request.getRequestDispatcher("myProfile.jsp");
-		dispatcher.forward(request, response);
-		
-		
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		try {
+			UserDaoImpl userDao=new UserDaoImpl();
+			HttpSession session=request.getSession();
+			int userId=(int)session.getAttribute("userId");
+			List<User> userList=new ArrayList<User>();
+			userList=userDao.myProfile(userId);
+			request.setAttribute("user",userList);
+			RequestDispatcher dispatcher=request.getRequestDispatcher("myProfile.jsp");
+			dispatcher.forward(request, response);
+			
+			
+			response.getWriter().append("Served at: ").append(request.getContextPath());
+		} catch (ServletException e) {
+	
+			e.printStackTrace();
+		} catch (IOException e) {
+			
+			e.printStackTrace();
+		}
 	}
 
 	
