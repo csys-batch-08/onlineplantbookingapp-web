@@ -47,7 +47,7 @@ public class HelloServlet extends HttpServlet {
 			System.out.println("HelloServlet - POST Request");
 			response.getWriter().append("HelloServlet - POST Request");
 		} catch (IOException e) {
-			Fe.printStackTrace();
+			e.printStackTrace();
 		}
 	}
 
